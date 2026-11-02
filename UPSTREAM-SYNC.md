@@ -68,6 +68,37 @@ dsh plugin --profile web add @chunqing286/superpowers-dsh@<version>-sec.N
 release reports 15 skills registered, 84 files checked, and the next
 upstream release will change both numbers.
 
+## Never run `npm run sync` in this fork
+
+**`npm run sync` (`scripts/sync-from-upstream.mjs`) is destructive in this
+fork — do not use it to pull upstream.** The script serves the upstream
+*port* repo's own re-porting from obra/superpowers, not this fork's sync
+with the upstream port. Its source is **obra/superpowers** (plus
+`port/overrides/`), and it **deletes and replaces the whole `skills/`
+directory** (`rm -r`, then rename a staging copy into place). Running it
+here would:
+
+- delete this fork's six added security files
+  (`skills/subagent-driven-development/references/security-loop.md`,
+  `security-review-part.md`, `security-kit.md`, `security-final-review.md`,
+  `references/threat-modeler-prompt.md`, and
+  `references/plan-security-section.md`);
+- restore the four thin-shell-modified upstream files
+  (`skills/subagent-driven-development/SKILL.md`,
+  `task-reviewer-prompt.md`, `references/final-review.md`, and
+  `skills/writing-plans/SKILL.md`) to their upstream text — erasing the
+  security dimension;
+- and **not report any failure**: the script's assertions only check that
+  each transform matched its anchor, not that the fork's files still exist,
+  so it exits successfully leaving a `skills/` tree with no security
+  dimension.
+
+The correct way to pull the upstream port is the **git rebase** loop above
+(`git fetch upstream` → `git rebase upstream/main`). If a re-port from obra
+is genuinely needed (rare), first confirm the working tree is clean, do it
+on a separate branch, and afterwards check with `git diff` that the security
+files above are all still present.
+
 **`npm publish` prerequisites.** The package is owned by the npm account
 `chunqing286`; the publisher must be logged in — `npm whoami` prints
 `chunqing286` — with publish rights for the `@chunqing286` scope, using the
@@ -133,10 +164,10 @@ fork-only additions are the other group):
   because upstream's package is unscoped. Keep **our** row `name` exactly in
   lockstep with `package.json`'s `name`
   (`@chunqing286/superpowers-dsh`) — the row `id: superpowers-dsh` stays as
-  it is. Taking upstream's `name` here silently breaks activation (this
-  happened once already: the package was renamed to a scope in task 4 and
-  the stale `name` was not updated, so the plugin installed but never
-  activated).
+  it is. Taking upstream's `name` here breaks activation: the package
+  installs, then the row fails to import. This happened once already — the
+  package was moved to the `@chunqing286` scope and the stale `name` was not
+  updated in the same commit.
 - `lib/index.js` — keep our scoped provider `name`
   (`@chunqing286/superpowers-dsh`) and `PACKAGED_SKILL_RANK` if upstream
   changes it; take upstream's other changes.
@@ -191,9 +222,8 @@ files, which have no cap) until the file is under the limit again.
 
 The current release is npm `0.4.0-sec.2`, tag **`sec-v0.4.0-2`**. (The first
 release, `0.4.0-sec.1` / tag `sec-v0.4.0-1`, is deprecated: it installed but
-did not activate.) (The tag
-carries the counter because a counter-less `sec-v0.4.0` would collide on the
-second publish of the same upstream line.)
+did not activate. The tag carries the counter because a counter-less
+`sec-v0.4.0` would collide on the second publish of the same upstream line.)
 
 ## Publish order
 

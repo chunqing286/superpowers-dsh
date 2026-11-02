@@ -7,7 +7,7 @@ on any machine.
 
 - Fork repository: <https://github.com/chunqing286/superpowers-dsh>
 - npm package: **`@chunqing286/superpowers-dsh`** (current release `0.4.0-sec.2`;
-  the first, `0.4.0-sec.1`, is deprecated on npm — see Rollback),
+  the first, `0.4.0-sec.1`, is deprecated on npm — see Rollback;
   based on the upstream port's v0.4.0; skill content from obra/superpowers
   v7.0.1)
 - This file ships in the GitHub repository only — it is **not** inside the npm
