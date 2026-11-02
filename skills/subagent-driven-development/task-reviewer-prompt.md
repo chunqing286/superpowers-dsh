@@ -10,7 +10,12 @@ more, nothing less) and is well-built (clean, tested, maintainable)
 **Security part:** [references/security-review-part.md](references/security-review-part.md)
 is the security dimension of this template — the same review seat, one extra
 input block, one extra report section, output format otherwise unchanged.
-Always append its content when dispatching from this template and fill its
+When dispatching from this template, splice its blocks into the dispatch
+prompt at the points its splice table names (`## Additional Input` into
+`## What Was Requested` after the `[GLOBAL_CONSTRAINTS]` line;
+`## Part 3: Security` after `## Part 2: Code Quality`, before
+`## Calibration`; `## Output Format Addition` into `## Output Format`,
+between the `### Issues` block and `### Assessment`), and fill the
 `[SECURITY_CONSTRAINTS]` block: the binding constraints copied verbatim in
 the plan's `[SEC-0N] ...` form, or exactly
 `No security constraints bind this task.` when no constraint binds the task.

@@ -19,6 +19,10 @@ titles, and order are not changed by the splice.
 | `## Output Format Addition` | into `## Output Format`, between the `### Issues` block and `### Assessment` |
 | `## Read-Only` | stays inside `## Part 3: Security` |
 
+`## What the Dispatcher Fills In` and `## Placeholder` are dispatcher-facing
+notes: they are **not** spliced into the dispatch prompt — the dispatcher
+reads them to fill `[SECURITY_CONSTRAINTS]`.
+
 Security is a third dimension of the existing review seat, not a second
 reviewer: the base template's output format is untouched, security findings
 enter the existing **Critical / Important / Minor** levels — no new level is
