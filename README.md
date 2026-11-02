@@ -60,7 +60,10 @@ profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id
 [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md)。
 这两个文件不进 npm 包，只在 GitHub 仓库里——所以上面已给出安装命令本身。
 下文各节描述的是同一个插件，其中的安装命令均已指向本 fork 的包，不再指向上游
-port 的未加作用域旧包。
+port 的未加作用域旧包。其中：跨机器安装**推荐 registry 规格**
+`@chunqing286/superpowers-dsh@0.4.0-sec.1`（版本锁定，可按版本复现与回滚）；
+GitHub 形式装的是同一个 fork 的**分支头**（无版本锁）；本地文件夹 / `file:`
+形式仅开发自用、机器相关。
 
 ## 目录
 

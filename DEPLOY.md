@@ -61,14 +61,33 @@ Plugins page takes the package name and resolves the latest version:
    `@chunqing286/superpowers-dsh@0.4.0-sec.1`.
 
 > **Never install with a `link:` spec.** A `link:` spec is an absolute,
-> machine-specific path that breaks on every other machine. The npm registry
-> spec is the only supported **distribution** form. The READMEs'
-> upstream-derived install sections ("Install from GitHub", "Install from a
-> tarball or a local folder") also show GitHub-URL and tarball/local-folder
-> installs: those work against a local checkout but are machine-specific and
-> are **not** a supported way to install this fork on another machine. (A
-> local folder or `file:` install is fine for developing the plugin on your
-> own machine — it is just not a distribution method.)
+> machine-specific path that breaks on every other machine.
+
+The READMEs carry more install sections than the three forms above. Where
+each form stands:
+
+1. **npm registry spec** (the three forms above) — the **recommended**
+   distribution form: works from any machine, and it is **version-pinned**
+   (`0.4.0-sec.1`), so you can reproduce the install, pin it, and roll back
+   by version.
+2. **GitHub-URL installs** — the READMEs' "Simplest: one command"
+   (`github:chunqing286/superpowers-dsh`), the "let the Harness agent
+   install this link" prompt, and "Install from GitHub" (the clone URL):
+   these also work from **any** machine and install the same fork, but they
+   install the **branch head**, not a published release — no version pin, so
+   you cannot pin, reproduce, or roll back by version, and what you get
+   changes when the branch moves. Fine for testing the tip; use the registry
+   spec on a machine you intend to keep.
+3. **Tarball install** ("Install from a tarball or a local folder") — works
+   from any machine **once the tarball file itself is transferred there**.
+   It is pinned (it is a built artifact), but it is not version-resolved by
+   the registry.
+4. **Local folder / `file:` spec** (same README section) — the only
+   genuinely **machine-specific** form: an absolute path, linked rather
+   than copied, live-editable. Development only; never a distribution
+   method (this is the `link:` case the warning above bans).
+
+Only form 4 is machine-specific.
 
 ### Replacing an existing `superpowers-dsh` bundle
 

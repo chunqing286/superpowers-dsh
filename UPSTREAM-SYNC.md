@@ -82,13 +82,20 @@ history), so a plain `git push` is rejected. That is expected — use
 `git push --force-with-lease origin main`. `--force-with-lease` (not plain
 `--force`) refuses to overwrite the remote if someone else pushed to it in
 the meantime. Never force-push anywhere else, and never push to `upstream`.
+The one exception is the mirror push already in the loop,
+`git push --force-with-lease origin main:local/security-audit`: that branch
+is a **mirror** of `main`, so after `main` is rebased it must be rewritten
+to the new `main` — and `--force-with-lease` limits that rewrite to the
+state you last fetched, so a concurrent change on the branch is refused
+rather than silently overwritten.
 
 ## Resolving conflicts
 
 `git diff --stat v0.4.0..HEAD` shows the fork's **full delta** relative to
 the upstream port: 15 paths. Only the **seven files that already exist
 upstream** are conflict-bearing — **four upstream skill files** plus the
-**three fork-owned files** listed below. The other eight are fork-only
+**three more upstream files the fork modifies**, listed below. The other
+eight are fork-only
 additions (`DEPLOY.md`, `UPSTREAM-SYNC.md`, and the six new
 `skills/subagent-driven-development/references/*.md` files); a file that
 exists only in the fork can never conflict. (An earlier version of this
@@ -111,7 +118,8 @@ The four upstream skill files, each carrying a minimal security pointer:
 - `skills/writing-plans/SKILL.md` — the `## Security Constraints` section
   and the `references/threat-modeler-prompt.md` pointer
 
-The three fork-owned files the upstream port also touches:
+The three upstream files the fork modifies (they exist upstream — the
+fork-only additions are the other group):
 
 - `package.json` — upstream will bump `version` and may change any other
   field. Keep the scoped name `@chunqing286/superpowers-dsh`, the `-sec.N`

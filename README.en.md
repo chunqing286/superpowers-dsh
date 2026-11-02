@@ -71,6 +71,11 @@ Both files live in the GitHub repo only — they are not in the npm tarball —
 which is why the install command is given above, not just a pointer.
 The sections below describe the same plugin; their install commands all
 refer to this fork's package, not the upstream port's unscoped package.
+Among them: for another machine prefer the **registry spec**
+`@chunqing286/superpowers-dsh@0.4.0-sec.1` — it is version-pinned, so the
+install is reproducible and rollback-able by version; the GitHub forms
+install the same fork from the **branch head** (no version pin); the
+local-folder / `file:` form is development-only and machine-specific.
 
 ## Contents
 
