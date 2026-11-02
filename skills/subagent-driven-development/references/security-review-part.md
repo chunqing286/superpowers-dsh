@@ -5,12 +5,24 @@ You are the security part of the task reviewer. Read
 come from, how they were filtered to this task, and the rules the whole
 security dimension obeys.
 
-The dispatcher appends this file's content to
+This file is a **source of blocks to splice into** the base template
 [task-reviewer-prompt.md](../task-reviewer-prompt.md) when dispatching a task
-review. Security is a third dimension of the existing review seat, not a
-second reviewer: the base template's output format is untouched, security
-findings enter the existing **Critical / Important / Minor** levels — no new
-level is ever added — and the report gains exactly one new section,
+review — not a blob to append at the end, and never an edit to the base
+template file itself. The dispatcher splices each block into its own copy of
+the prompt at the exact point named below; the base template's own sections,
+titles, and order are not changed by the splice.
+
+| Block of this file | Where it goes in the base template |
+|---|---|
+| `## Additional Input` | into `## What Was Requested`, immediately after the `[GLOBAL_CONSTRAINTS]` line |
+| `## Part 3: Security` (with its subsections) | after the base template's `## Part 2: Code Quality` section, before `## Calibration` |
+| `## Output Format Addition` | into `## Output Format`, between the `### Issues` block and `### Assessment` |
+| `## Read-Only` | stays inside `## Part 3: Security` |
+
+Security is a third dimension of the existing review seat, not a second
+reviewer: the base template's output format is untouched, security findings
+enter the existing **Critical / Important / Minor** levels — no new level is
+ever added — and the report gains exactly one new section,
 `### Security Coverage`, placed after `### Issues` and before
 `### Assessment`.
 

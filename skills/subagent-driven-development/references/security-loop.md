@@ -9,13 +9,14 @@ auditor" role would re-report the same issues the task review finds, in a
 format the re-review template cannot adjudicate, doubling noise until the
 fix loop drowns. So the security dimension rides the existing seats.
 
-## Three Files, Three Insertion Points
+## Four Files, Four Insertion Points
 
 | File | Insertion point | When it runs |
 |---|---|---|
 | [threat-modeler-prompt.md](threat-modeler-prompt.md) | After brainstorming, before writing-plans | Greenfield project: produce the security constraints |
 | [plan-security-section.md](plan-security-section.md) | The `## Security Constraints` section of the plan writing-plans produces | Existing plan: add the section retroactively |
-| [security-review-part.md](security-review-part.md) | Appended to `task-reviewer-prompt.md` at dispatch | Every task review (injected per task) |
+| [security-review-part.md](security-review-part.md) | Spliced into `task-reviewer-prompt.md` at dispatch | Every task review (injected per task) |
+| [security-final-review.md](security-final-review.md) | Spliced into the final reviewer's dispatch | The final whole-branch review, once per branch |
 
 ```
 Greenfield:
@@ -93,3 +94,14 @@ findings in the SDD format and would scramble the fix loop.
 The pre-merge pass (`review` with `lenses: ["security"]`, `depth: "full"`)
 looks at the **whole branch's composition effects** — task A widened a
 path, task B trusted that path. No per-task review can see that.
+
+The branch level has two complementary seats, and neither replaces the
+other. The SDD final-review seat, extended by
+[security-final-review.md](security-final-review.md), carries the
+**constraint-driven** branch check: every bound constraint verified against
+the whole-branch diff, in the SDD-friendly format
+`finishing-a-development-branch` adjudicates. The DSH `review` tool's
+pre-merge pass is the **complementary** sweep: free-form, aimed at
+whole-branch composition the constraint list never anticipated, with a
+verifier refuting each finding. Run both; do not drop one because the
+other exists.

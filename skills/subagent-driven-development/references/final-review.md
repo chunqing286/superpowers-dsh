@@ -12,7 +12,10 @@ on the most capable available model (see SKILL.md's Model Selection), using
 requesting-code-review's
 [code-reviewer.md](../../requesting-code-review/code-reviewer.md). Point it at
 the ledger's deferred-minor and parked lines so it can triage which must be
-fixed before merge.
+fixed before merge. Also splice
+[references/security-final-review.md](security-final-review.md) into the
+dispatch and hand it the branch's constraint file (the plan's
+`## Security Constraints` section) as `[SECURITY_CONSTRAINTS_FILE]`.
 
 If the final whole-branch review returns findings, dispatch ONE fix subagent
 with the complete findings list — not one fixer per finding.

@@ -7,7 +7,7 @@ whole-branch review），它们之间靠固定的输出格式、fix loop、re-re
 ledger 串起来。另起一个"安全审计员"角色会：与 task review 重复报同一批问题、findings 格式
 对不上 re-review 模板、噪音翻倍把 fix loop 撑爆。
 
-## 三个文件与三个插入点
+## 四个文件与四个插入点
 
 （下文文件路径均相对于本技能目录 `skills/subagent-driven-development/`。）
 
@@ -16,6 +16,7 @@ ledger 串起来。另起一个"安全审计员"角色会：与 task review 重�
 | `references/threat-modeler-prompt.md` | brainstorming 之后、writing-plans 之前 | 全新项目：产出安全约束 |
 | `references/plan-security-section.md` | writing-plans 产出的 plan 里 | 已有 plan：补写安全约束段 |
 | `references/security-review-part.md` | 派发时并入 `task-reviewer-prompt.md` | 每个任务审查（按需注入） |
+| `references/security-final-review.md` | 派发时并入终审 reviewer 的提示词 | 分支终审（每分支一次） |
 
 ```
 全新项目：
