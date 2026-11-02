@@ -4,6 +4,14 @@
 #
 # This patch is applied over the dsh-base layer; later layers (the profile's
 # own cordis.patch.yml and --patch overlays) can still address this row by id.
+#
+# id vs name: `id` is the stable row identifier (other composition layers
+# address the row by it, so it stays `superpowers-dsh`); `name` is the plugin
+# package specifier the loader imports — it must exactly follow the `name` in
+# package.json. They diverged when the package was renamed to the scoped
+# `@chunqing286/superpowers-dsh` (task 4), and the stale `name` broke
+# activation. If the package name ever changes again, change `name` here in
+# the same commit.
 - insert:
     - id: superpowers-dsh
-      name: 'superpowers-dsh'
+      name: '@chunqing286/superpowers-dsh'

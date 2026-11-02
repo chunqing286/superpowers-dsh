@@ -178,7 +178,7 @@ files, which have no cap) until the file is under the limit again.
   upstream version, increments on re-syncs of the same one).
 - Git tag: **`sec-v<upstream version>-<N>`**, mirroring the npm version.
 
-The first release is npm `0.4.0-sec.1`, tag **`sec-v0.4.0-1`**. (The tag
+The first release is npm `0.4.0-sec.2`, tag **`sec-v0.4.0-2`**. (The tag
 carries the counter because a counter-less `sec-v0.4.0` would collide on the
 second publish of the same upstream line.)
 

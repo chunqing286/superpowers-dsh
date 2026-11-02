@@ -26,7 +26,7 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 
 本仓库是上游 port [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh)
 的 **fork**，发布为 npm 包 **`@chunqing286/superpowers-dsh`**（首个版本
-`0.4.0-sec.1`，基于上游 port v0.4.0）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
+`0.4.0-sec.2`，基于上游 port v0.4.0）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
 进入两条开发流程：
 
 - **`writing-plans`**：写计划前先威胁建模，每份计划必须带
@@ -40,7 +40,7 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 **安装**（Windows PowerShell，`dsh` 在 PATH 上）：
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
 ```
 
 （把 `web` 换成你的 profile 名；桌面应用用户见下句。）
@@ -61,7 +61,7 @@ profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id
 这两个文件不进 npm 包，只在 GitHub 仓库里——所以上面已给出安装命令本身。
 下文各节描述的是同一个插件，其中的安装命令均已指向本 fork 的包，不再指向上游
 port 的未加作用域旧包。其中：跨机器安装**推荐 registry 规格**
-`@chunqing286/superpowers-dsh@0.4.0-sec.1`（版本锁定，可按版本复现与回滚）；
+`@chunqing286/superpowers-dsh@0.4.0-sec.2`（版本锁定，可按版本复现与回滚）；
 GitHub 形式装的是同一个 fork 的**分支头**（无版本锁）；本地文件夹 / `file:`
 形式仅开发自用、机器相关。
 
@@ -110,7 +110,7 @@ Agent 会自动完成安装（`dsh plugin --profile web add` → 重启 profile 
 包已发布到 npm，名为 `@chunqing286/superpowers-dsh`（国内会自动同步到 npmmirror 镜像）：
 
 ```sh
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
 ```
 
 > 必须用 `dsh plugin` 形式——直接 `npm install @chunqing286/superpowers-dsh` 只会把包当
@@ -127,8 +127,8 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ### 从 tarball 或本地文件夹安装
 
 ```sh
-# tarball（例如 Release 里的 chunqing286-superpowers-dsh-0.4.0-sec.1.tgz）
-dsh plugin --profile web add C:\路径\to\chunqing286-superpowers-dsh-0.4.0-sec.1.tgz
+# tarball（例如 Release 里的 chunqing286-superpowers-dsh-0.4.0-sec.2.tgz）
+dsh plugin --profile web add C:\路径\to\chunqing286-superpowers-dsh-0.4.0-sec.2.tgz
 
 # 或解压后的插件文件夹（pnpm 以链接方式安装，改完重启即生效）
 dsh plugin --profile web add C:\路径\to\superpowers-dsh
@@ -155,7 +155,7 @@ dsh --profile web --dump-config     # 必须出现 `superpowers-dsh` 行
 把 `--profile` 指向你实际运行的 profile：
 
 ```sh
-dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.1
+dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.2
 dsh --profile headless --dump-config
 ```
 
@@ -195,7 +195,7 @@ dsh plugin --profile web remove @chunqing286/superpowers-dsh
 | 已发布版本数 | 承载接口的两个包 `@deepseek-ai/dsh-skill` 与 `@deepseek-ai/dsh-app-boot` 各 **31 个已发布版本** |
 | 逐版本核对结果 | **31 / 31 全部一致**，从最早的 `0.0.1-rc.1` 到最新的 `0.2.1-alpha.1`，接口签名与语义均未变 |
 | 端到端实跑 | 把 `lib/index.js` 挂进本机 DSH `0.2.0-rc.2` 的**真实 `SkillRegistry`**：`list()` 返回 15 个技能，逐个 `get()` 都能取到正文与 `resourceBase` |
-| 插件自身版本 | `0.4.0-sec.1`（技能内容同步自 obra/superpowers `v7.0.1`） |
+| 插件自身版本 | `0.4.0-sec.2`（技能内容同步自 obra/superpowers `v7.0.1`） |
 | 运行时依赖 | 无。只用 Node 内置模块，不引入任何第三方依赖，因此不受 DSH 依赖树变化影响 |
 | Node.js | 本机验证 `v22.22.2`；DSH 自身未声明 `engines`，本插件也未限制 |
 
@@ -272,7 +272,8 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 ## 工作原理
 
 - **Bundle 层** —— `cordis.patch.yml` 在 dsh-base 层之上插入一行
-  （`- id: superpowers-dsh, name: superpowers-dsh`）。后面的层（profile 的
+  （`- id: superpowers-dsh, name: '@chunqing286/superpowers-dsh'`；`id` 是稳定的行标识，
+  `name` 是 loader 实际 import 的包名，必须跟随 `package.json`）。后面的层（profile 的
   `cordis.patch.yml`、`--patch` 叠加）仍可按 id 定位这一行。
 - **提供者** —— `lib/index.js` 调用 `ctx.skills.registerProvider(...)`，
   注册一个提供者：

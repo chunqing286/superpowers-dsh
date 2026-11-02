@@ -6,7 +6,7 @@ security-audit fork of the upstream port
 on any machine.
 
 - Fork repository: <https://github.com/chunqing286/superpowers-dsh>
-- npm package: **`@chunqing286/superpowers-dsh`** (first release `0.4.0-sec.1`,
+- npm package: **`@chunqing286/superpowers-dsh`** (first release `0.4.0-sec.2`,
   based on the upstream port's v0.4.0; skill content from obra/superpowers
   v7.0.1)
 - This file ships in the GitHub repository only — it is **not** inside the npm
@@ -48,7 +48,7 @@ Plugins page takes the package name and resolves the latest version:
 2. **CLI, for a named profile:**
 
    ```powershell
-   dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
+   dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
    ```
 
    This forwards to pnpm inside that profile's own directory and initializes
@@ -58,7 +58,7 @@ Plugins page takes the package name and resolves the latest version:
    app actually loads. For the desktop app, use the Plugins page (option 1).
 3. **Inside an agent session:** the harness's `plugin_manager` tool with
    action `install_bundle` and target
-   `@chunqing286/superpowers-dsh@0.4.0-sec.1`.
+   `@chunqing286/superpowers-dsh@0.4.0-sec.2`.
 
 > **Never distribute with a `link:` spec.** As a way to *get the plugin onto
 > another machine* it is banned: a `link:` spec is an absolute,
@@ -71,7 +71,7 @@ each form stands:
 
 1. **npm registry spec** (the three forms above) — the **recommended**
    distribution form: works from any machine. The CLI and in-session forms
-   are **version-pinned** (`@chunqing286/superpowers-dsh@0.4.0-sec.1`), so
+   are **version-pinned** (`@chunqing286/superpowers-dsh@0.4.0-sec.2`), so
    you can reproduce the install, pin it, and roll back by version; the
    desktop **Plugins page** takes only the package name and resolves the
    **latest published version** — it is *not* pinned and moves as new
@@ -200,8 +200,10 @@ re-run the verification steps above.
 
 ## Rollback
 
-Install the previously published `-sec.N` version — the first one is
-`0.4.0-sec.1`. List what exists:
+Install the previously published `-sec.N` version. **`0.4.0-sec.1` was
+withdrawn** (it installs but fails to activate — that defect is what
+`0.4.0-sec.2` fixes), so never roll back to it; from `0.4.0-sec.2` onward,
+the previous `-sec.N` version is a valid rollback target. List what exists:
 
 ```powershell
 npm view @chunqing286/superpowers-dsh versions
@@ -210,7 +212,7 @@ npm view @chunqing286/superpowers-dsh versions
 Then install the one you want back, e.g.:
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
 ```
 
 Restart the profile afterwards.
