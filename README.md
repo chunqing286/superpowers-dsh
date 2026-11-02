@@ -24,9 +24,9 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 
 ## 本 Fork：安全审计线（@chunqing286/superpowers-dsh）
 
-本仓库是 [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh)
+本仓库是上游 port [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh)
 的 **fork**，发布为 npm 包 **`@chunqing286/superpowers-dsh`**（首个版本
-`0.4.0-sec.1`，基于上游 v0.4.0）。相对上游 v0.4.0，它多了一条**安全审计维度**，
+`0.4.0-sec.1`，基于上游 port v0.4.0）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
 进入两条开发流程：
 
 - **`writing-plans`**：写计划前先威胁建模，每份计划必须带
@@ -40,8 +40,10 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 **安装**（Windows PowerShell，`dsh` 在 PATH 上）：
 
 ```powershell
-dsh plugin --profile <profile名> add @chunqing286/superpowers-dsh@0.4.0-sec.1
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
 ```
+
+（把 `web` 换成你的 profile 名；桌面应用用户见下句。）
 
 桌面应用用户请改用应用内 **Plugins 页**按包名添加——桌面版运行在 `desktop`
 profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id 仍是
@@ -57,6 +59,8 @@ profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id
 上游同步与冲突处理见
 [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md)。
 这两个文件不进 npm 包，只在 GitHub 仓库里——所以上面已给出安装命令本身。
+下文各节描述的是同一个插件，其中的安装命令均已指向本 fork 的包，不再指向上游
+port 的未加作用域旧包。
 
 ## 目录
 
@@ -81,7 +85,7 @@ host 技能注册表，你 profile 里的每个 agent 会话都能在技能目�
 不需要先全局安装 `dsh`，在任意目录执行：
 
 ```sh
-npx @deepseek-ai/dsh plugin --profile web add github:LayneChai/superpowers-dsh
+npx @deepseek-ai/dsh plugin --profile web add github:chunqing286/superpowers-dsh
 ```
 
 装完后重启 `npx @deepseek-ai/dsh web`（或 `dsh web`），刷新浏览器即可。
@@ -91,7 +95,7 @@ npx @deepseek-ai/dsh plugin --profile web add github:LayneChai/superpowers-dsh
 打开 DeepSeek Harness（Web 界面），新建对话，把下面这句话发给它：
 
 ```
-帮我安装这个链接里边的插件：https://github.com/LayneChai/superpowers-dsh
+帮我安装这个链接里边的插件：https://github.com/chunqing286/superpowers-dsh
 ```
 
 Agent 会自动完成安装（`dsh plugin --profile web add` → 重启 profile →
@@ -100,13 +104,13 @@ Agent 会自动完成安装（`dsh plugin --profile web add` → 重启 profile 
 
 ### 从 npm 安装（推荐，一条命令）
 
-包已发布到 npm，名为 `superpowers-dsh`（国内会自动同步到 npmmirror 镜像）：
+包已发布到 npm，名为 `@chunqing286/superpowers-dsh`（国内会自动同步到 npmmirror 镜像）：
 
 ```sh
-dsh plugin --profile web add superpowers-dsh
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
 ```
 
-> 必须用 `dsh plugin` 形式——直接 `npm install superpowers-dsh` 只会把包当
+> 必须用 `dsh plugin` 形式——直接 `npm install @chunqing286/superpowers-dsh` 只会把包当
 > 普通库装到当前目录，**不会**注册进任何 DeepSeek Harness profile，技能
 > 永远不会被加载。
 
@@ -114,7 +118,7 @@ dsh plugin --profile web add superpowers-dsh
 
 ```sh
 # 任意目录下执行
-dsh plugin --profile web add https://github.com/LayneChai/superpowers-dsh.git
+dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ```
 
 ### 从 tarball 或本地文件夹安装
@@ -148,30 +152,36 @@ dsh --profile web --dump-config     # 必须出现 `superpowers-dsh` 行
 把 `--profile` 指向你实际运行的 profile：
 
 ```sh
-dsh plugin --profile headless add superpowers-dsh
+dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.1
 dsh --profile headless --dump-config
 ```
 
 ### 卸载
 
 ```sh
-dsh plugin --profile web remove superpowers-dsh
+dsh plugin --profile web remove @chunqing286/superpowers-dsh
 # 卸载后同样需要重启 profile
 ```
 
 ### 注意事项
 
 - 国内用户可以先把 npm 镜像设为 npmmirror，让 `dsh plugin add
-  superpowers-dsh` 更快：`npm config set registry https://registry.npmmirror.com`
+  @chunqing286/superpowers-dsh` 更快：`npm config set registry https://registry.npmmirror.com`
 - 从文件夹或 `file:` 规格安装的插件是链接安装（不是复制）：修改该文件夹后，
-  下次重启 profile 生效
+  下次重启 profile 生效。在本 fork 里这只是**开发自用**的形式——它是机器相关的
+  绝对路径，不是分发方式；跨机器分发只支持 npm registry 规格（见
+  [DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md)
+  对 `link:` 的禁止说明）
 - 使用者**不需要 npm 账号，也不需要 2FA**——安装只是普通的包下载
 
 ## DSH 版本兼容性
 
-**结论：与 npm 上已发布的全部 DSH 版本兼容；已在 DSH `0.2.0-rc.2`（当前 `latest`）上端到端实跑验证。无已知不兼容问题。**
+**结论：与 npm 上已发布的全部 DSH 版本兼容；本 fork 已于 2026-11-02 在 DSH `0.2.1-rc.5`（SDK `@deepseek-ai/dsh-skill@0.2.1-rc.5`）上端到端实跑验证。无已知不兼容问题。**
 
-核对日期 2026-10-03，npm 发布通道：`latest` = `next` = `0.2.0-rc.2`，`alpha` = `0.2.1-alpha.1`。
+上游 port（LayneChai/superpowers-dsh）的核对快照：2026-10-03，当时 npm 发布通道
+`latest` = `next` = `0.2.0-rc.2`，`alpha` = `0.2.1-alpha.1`。当前通道状态
+（2026-11-02 实测）：`latest` = `0.0.1-rc.1`，`next` = `0.2.1-rc.5`，
+`alpha` = `0.2.2-alpha.2`。
 
 ### 支持矩阵
 
@@ -181,7 +191,7 @@ dsh plugin --profile web remove superpowers-dsh
 | 已发布版本数 | 承载接口的两个包 `@deepseek-ai/dsh-skill` 与 `@deepseek-ai/dsh-app-boot` 各 **31 个已发布版本** |
 | 逐版本核对结果 | **31 / 31 全部一致**，从最早的 `0.0.1-rc.1` 到最新的 `0.2.1-alpha.1`，接口签名与语义均未变 |
 | 端到端实跑 | 把 `lib/index.js` 挂进本机 DSH `0.2.0-rc.2` 的**真实 `SkillRegistry`**：`list()` 返回 15 个技能，逐个 `get()` 都能取到正文与 `resourceBase` |
-| 插件自身版本 | `0.4.0`（技能内容同步自 obra/superpowers `v7.0.1`） |
+| 插件自身版本 | `0.4.0-sec.1`（技能内容同步自 obra/superpowers `v7.0.1`） |
 | 运行时依赖 | 无。只用 Node 内置模块，不引入任何第三方依赖，因此不受 DSH 依赖树变化影响 |
 | Node.js | 本机验证 `v22.22.2`；DSH 自身未声明 `engines`，本插件也未限制 |
 
@@ -211,10 +221,11 @@ node scripts/check-dsh-compat.mjs
 node scripts/check-dsh-compat.mjs D:\path\to\profile\node_modules
 ```
 
-本机实测输出：
+本 fork 于 2026-11-02 的本机实测输出（第二行为脚本打印的 SDK 目录）：
 
 ```
-dsh SDK      : @deepseek-ai/dsh-skill 0.2.0-rc.2
+dsh SDK      : @deepseek-ai/dsh-skill 0.2.1-rc.5
+               C:\Users\Administrator\AppData\Local\Temp\dsh-sdk-check\node_modules\@deepseek-ai\dsh-skill
 mounted      : 15 skills listed and read through the real SkillRegistry
 rank         : PACKAGED_SKILL_RANK=550 is below BUNDLED_SKILL_RANK=600
 
@@ -270,8 +281,9 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 
 ## 上游同步
 
-当前同步的上游版本：**obra/superpowers v7.0.1**（见 `package.json` 的
-`dsh.superpowersUpstream`）。
+当前同步的上游技能内容版本：**obra/superpowers v7.0.1**（见 `package.json` 的
+`dsh.superpowersUpstream`）。本节说的是技能内容的上游（obra/superpowers），
+不是本仓库 fork 自的上游 port（LayneChai/superpowers-dsh）。
 
 `skills/` 是**生成产物**，不要手改。同步逻辑写在两个地方，改它们再重跑即可：
 
@@ -323,9 +335,10 @@ node scripts/check-dsh-compat.mjs
     **26,615 → 16,754 字节。**
   - `executing-plans`：删掉与上文规则重复的 Example Workflow。
     **20,454 → 18,164 字节。**
-  - 上游同时加了 `tests/skill-size/test-skill-size.sh`，任何 `SKILL.md` 达到
-    20,000 字节即失败。本 port 现在 15 个 SKILL.md **全部低于 20,000 字节**
-    （最大的是 `subagent-driven-development` 19,470）。
+  - 上游技能内容（obra/superpowers）同时加了
+    `tests/skill-size/test-skill-size.sh`，任何 `SKILL.md` 达到
+    20,000 字节即失败。本 fork 现在 15 个 SKILL.md **全部低于 20,000 字节**
+    （最大的是 `subagent-driven-development` 19,883）。
 - **与 DSH 无关的部分**：issue / PR 模板改为要求「谁提的、你的人类伙伴原本要什么、
   200 字以内由人写的摘要」（#2569），`diagnosing-superpowers` 跟着加这两节并改用
   Bug Report 模板，`docs/superpowers/plans/` 下 18 份历史计划文档被删除。这些都在

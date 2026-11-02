@@ -25,10 +25,11 @@ user configuration.
 
 ## This fork: the security-audit line (@chunqing286/superpowers-dsh)
 
-This repository is a **fork** of
+This repository is a **fork** of the upstream port
 [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh),
 published to npm as **`@chunqing286/superpowers-dsh`** (first release
-`0.4.0-sec.1`, based on upstream v0.4.0). Over upstream v0.4.0 it adds a
+`0.4.0-sec.1`, based on the upstream port's v0.4.0). Over the upstream port
+v0.4.0 it adds a
 **security-audit dimension** wired into two development flows:
 
 - **`writing-plans`**: threat-model before writing the plan; every plan
@@ -44,8 +45,11 @@ install — no hand-editing of local files.
 **Install** (Windows PowerShell, `dsh` on `PATH`):
 
 ```powershell
-dsh plugin --profile <profile-name> add @chunqing286/superpowers-dsh@0.4.0-sec.1
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
 ```
+
+(Replace `web` with your profile name; desktop-app users see the next
+sentence.)
 
 Desktop-app users: add the package by name from the in-app **Plugins** page
 instead — the desktop build runs in its own `desktop` profile, and
@@ -65,6 +69,8 @@ Upstream sync and conflict handling:
 [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md).
 Both files live in the GitHub repo only — they are not in the npm tarball —
 which is why the install command is given above, not just a pointer.
+The sections below describe the same plugin; their install commands all
+refer to this fork's package, not the upstream port's unscoped package.
 
 ## Contents
 
@@ -90,7 +96,7 @@ tool. Skill content is synced from upstream **obra/superpowers v7.0.1**.
 No global `dsh` install required. Run this from any directory:
 
 ```sh
-npx @deepseek-ai/dsh plugin --profile web add github:LayneChai/superpowers-dsh
+npx @deepseek-ai/dsh plugin --profile web add github:chunqing286/superpowers-dsh
 ```
 
 Then restart `npx @deepseek-ai/dsh web` (or `dsh web`) and refresh the browser.
@@ -101,7 +107,7 @@ Open the DeepSeek Harness web UI, start a new conversation, and send this
 message:
 
 ```
-Please install the plugin from this link: https://github.com/LayneChai/superpowers-dsh
+Please install the plugin from this link: https://github.com/chunqing286/superpowers-dsh
 ```
 
 The agent will run the install for you (`dsh plugin --profile web add` →
@@ -112,14 +118,14 @@ present.
 
 ### Install from npm (recommended — one command)
 
-The package is published on npm as `superpowers-dsh` (synced to the
-npmmirror mirror for mainland China):
+The package is published on npm as `@chunqing286/superpowers-dsh` (synced to
+the npmmirror mirror for mainland China):
 
 ```sh
-dsh plugin --profile web add superpowers-dsh
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.1
 ```
 
-> Use the `dsh plugin` form — a plain `npm install superpowers-dsh` installs
+> Use the `dsh plugin` form — a plain `npm install @chunqing286/superpowers-dsh` installs
 > the package as a library in the current directory but does **not** register
 > it into any DeepSeek Harness profile, so the skills would never load.
 
@@ -127,7 +133,7 @@ dsh plugin --profile web add superpowers-dsh
 
 ```sh
 # from anywhere
-dsh plugin --profile web add https://github.com/LayneChai/superpowers-dsh.git
+dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ```
 
 ### Install from a tarball or a local folder
@@ -162,35 +168,41 @@ A successful install looks like this:
 Point `--profile` at whichever profile you run:
 
 ```sh
-dsh plugin --profile headless add superpowers-dsh
+dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.1
 dsh --profile headless --dump-config
 ```
 
 ### Uninstall
 
 ```sh
-dsh plugin --profile web remove superpowers-dsh
+dsh plugin --profile web remove @chunqing286/superpowers-dsh
 # then restart the profile again
 ```
 
 ### Notes
 
 - Installers in mainland China can set the npm mirror first — it makes `dsh
-  plugin add superpowers-dsh` fast:
+  plugin add @chunqing286/superpowers-dsh` fast:
   `npm config set registry https://registry.npmmirror.com`
 - A plugin installed from a folder or `file:` spec is linked, not copied:
-  changes to that folder take effect after the next profile restart.
+  changes to that folder take effect after the next profile restart. In this
+  fork that form is **development-only** — it is a machine-specific absolute
+  path, not a distribution method; cross-machine distribution supports only
+  the npm registry spec (see the `link:` prohibition in
+  [DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md)).
 - Consumers need **no npm account and no 2FA** — installing is a plain
   package download.
 
 ## DSH version compatibility
 
-**Bottom line: compatible with every DSH version published on npm, verified
-end-to-end on DSH `0.2.0-rc.2` (the current `latest`). No known
-incompatibilities.**
+**Bottom line: compatible with every DSH version published on npm; this fork
+was verified end-to-end on 2026-11-02 against DSH `0.2.1-rc.5` (SDK
+`@deepseek-ai/dsh-skill@0.2.1-rc.5`). No known incompatibilities.**
 
-Checked 2026-10-03. npm dist-tags: `latest` = `next` = `0.2.0-rc.2`,
-`alpha` = `0.2.1-alpha.1`.
+Upstream-port (LayneChai/superpowers-dsh) audit snapshot: checked
+2026-10-03, when npm dist-tags were `latest` = `next` = `0.2.0-rc.2`,
+`alpha` = `0.2.1-alpha.1`. Current channel state (measured 2026-11-02):
+`latest` = `0.0.1-rc.1`, `next` = `0.2.1-rc.5`, `alpha` = `0.2.2-alpha.2`.
 
 ### Support matrix
 
@@ -200,7 +212,7 @@ Checked 2026-10-03. npm dist-tags: `latest` = `next` = `0.2.0-rc.2`,
 | Published versions carrying them | **31 released versions each** of `@deepseek-ai/dsh-skill` and `@deepseek-ai/dsh-app-boot` |
 | Per-version audit | **31 / 31 identical** — from the first release `0.0.1-rc.1` through the newest `0.2.1-alpha.1`, no signature or semantics changed |
 | End-to-end run | `lib/index.js` mounted into the **real `SkillRegistry`** of local DSH `0.2.0-rc.2`: `list()` returned 15 skills and every `get()` returned a body and a `resourceBase` |
-| This plugin's version | `0.4.0` (skill content synced from obra/superpowers `v7.0.1`) |
+| This plugin's version | `0.4.0-sec.1` (skill content synced from obra/superpowers `v7.0.1`) |
 | Runtime dependencies | None. Node built-ins only, so a DSH dependency-tree change cannot break it |
 | Node.js | Verified on `v22.22.2`; DSH declares no `engines`, and neither does this plugin |
 
@@ -234,10 +246,12 @@ node scripts/check-dsh-compat.mjs
 node scripts/check-dsh-compat.mjs D:\path\to\profile\node_modules
 ```
 
-Output on this machine:
+Output on this machine for this fork, 2026-11-02 (the second line is the
+SDK directory the script prints):
 
 ```
-dsh SDK      : @deepseek-ai/dsh-skill 0.2.0-rc.2
+dsh SDK      : @deepseek-ai/dsh-skill 0.2.1-rc.5
+               C:\Users\Administrator\AppData\Local\Temp\dsh-sdk-check\node_modules\@deepseek-ai\dsh-skill
 mounted      : 15 skills listed and read through the real SkillRegistry
 rank         : PACKAGED_SKILL_RANK=550 is below BUNDLED_SKILL_RANK=600
 
@@ -300,8 +314,10 @@ Pass an explicit directory or `--require` to make a missing SDK an error, or set
 
 ## Upstream sync
 
-Currently synced upstream version: **obra/superpowers v7.0.1** (recorded in
-`package.json` as `dsh.superpowersUpstream`).
+Currently synced upstream skill-content version: **obra/superpowers v7.0.1**
+(recorded in `package.json` as `dsh.superpowersUpstream`). This section is
+about the skill-content upstream (obra/superpowers), not the port repository
+this fork tracks (LayneChai/superpowers-dsh).
 
 `skills/` is **generated output** — do not hand-edit it. The sync lives in two
 places; change those and re-run:
@@ -364,10 +380,11 @@ skills, 68 → 78 files):
     existing files renamed into `references/`). **26,615 → 16,754 bytes.**
   - `executing-plans`: drops its Example Workflow, which repeated rules stated
     above it. **20,454 → 18,164 bytes.**
-  - Upstream also added `tests/skill-size/test-skill-size.sh`, which fails when
-    any `SKILL.md` reaches 20,000 bytes. All 15 `SKILL.md` files in this port are
+  - The upstream skill content (obra/superpowers) also added
+    `tests/skill-size/test-skill-size.sh`, which fails when
+    any `SKILL.md` reaches 20,000 bytes. All 15 `SKILL.md` files in this fork are
     now **under 20,000 bytes** (the largest is `subagent-driven-development` at
-    19,470).
+    19,883).
 - **Not applicable to DSH**: the issue and PR templates now require who filed,
   what the human partner asked for, and a human-written summary under 200 words
   (#2569); `diagnosing-superpowers` adds those two sections and switches to the
