@@ -25,8 +25,8 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 ## 本 Fork：安全审计线（@chunqing286/superpowers-dsh）
 
 本仓库是上游 port [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh)
-的 **fork**，发布为 npm 包 **`@chunqing286/superpowers-dsh`**（首个版本
-`0.4.0-sec.2`，基于上游 port v0.4.0）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
+的 **fork**，发布为 npm 包 **`@chunqing286/superpowers-dsh`**（当前版本
+`0.4.0-sec.2`，基于上游 port v0.4.0；首个发布 `0.4.0-sec.1` 已废弃——能安装但不激活）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
 进入两条开发流程：
 
 - **`writing-plans`**：写计划前先威胁建模，每份计划必须带
@@ -272,7 +272,7 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 ## 工作原理
 
 - **Bundle 层** —— `cordis.patch.yml` 在 dsh-base 层之上插入一行
-  （`- id: superpowers-dsh, name: '@chunqing286/superpowers-dsh'`；`id` 是稳定的行标识，
+  （`- { id: superpowers-dsh, name: '@chunqing286/superpowers-dsh' }`；`id` 是稳定的行标识，
   `name` 是 loader 实际 import 的包名，必须跟随 `package.json`）。后面的层（profile 的
   `cordis.patch.yml`、`--patch` 叠加）仍可按 id 定位这一行。
 - **提供者** —— `lib/index.js` 调用 `ctx.skills.registerProvider(...)`，

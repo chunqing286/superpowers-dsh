@@ -27,8 +27,9 @@ user configuration.
 
 This repository is a **fork** of the upstream port
 [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh),
-published to npm as **`@chunqing286/superpowers-dsh`** (first release
-`0.4.0-sec.2`, based on the upstream port's v0.4.0). Over the upstream port
+published to npm as **`@chunqing286/superpowers-dsh`** (current release
+`0.4.0-sec.2`, based on the upstream port's v0.4.0; the first release,
+`0.4.0-sec.1`, is deprecated — it installs but does not activate). Over the upstream port
 v0.4.0 it adds a
 **security-audit dimension** wired into two development flows:
 
@@ -305,7 +306,7 @@ Pass an explicit directory or `--require` to make a missing SDK an error, or set
 ## How it works
 
 - **Bundle layer** — `cordis.patch.yml` inserts one row
-  (`- id: superpowers-dsh, name: '@chunqing286/superpowers-dsh'`; `id` is the
+  (`- { id: superpowers-dsh, name: '@chunqing286/superpowers-dsh' }`; `id` is the
   stable row identifier, `name` is the package specifier the loader imports and
   must follow `package.json`) over the dsh-base layer.
   Later layers (the profile's `cordis.patch.yml`, `--patch` overlays) can

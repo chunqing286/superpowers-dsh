@@ -92,9 +92,9 @@ rather than silently overwritten.
 ## Resolving conflicts
 
 `git diff --stat v0.4.0..HEAD` shows the fork's **full delta** relative to
-the upstream port: 15 paths. Only the **seven files that already exist
+the upstream port: 17 paths. Only the **nine files that already exist
 upstream** are conflict-bearing — **four upstream skill files** plus the
-**three more upstream files the fork modifies**, listed below. The other
+**five more upstream files the fork modifies**, listed below. The other
 eight are fork-only
 additions (`DEPLOY.md`, `UPSTREAM-SYNC.md`, and the six new
 `skills/subagent-driven-development/references/*.md` files); a file that
@@ -118,7 +118,7 @@ The four upstream skill files, each carrying a minimal security pointer:
 - `skills/writing-plans/SKILL.md` — the `## Security Constraints` section
   and the `references/threat-modeler-prompt.md` pointer
 
-The three upstream files the fork modifies (they exist upstream — the
+The five upstream files the fork modifies (they exist upstream — the
 fork-only additions are the other group):
 
 - `package.json` — upstream will bump `version` and may change any other
@@ -129,6 +129,17 @@ fork-only additions are the other group):
 - `README.md` / `README.en.md` — keep this fork's section (the
   security-audit line) and the fork-pointing install commands; take
   upstream's prose changes everywhere else.
+- `cordis.patch.yml` — upstream keeps the row `name: 'superpowers-dsh'`
+  because upstream's package is unscoped. Keep **our** row `name` exactly in
+  lockstep with `package.json`'s `name`
+  (`@chunqing286/superpowers-dsh`) — the row `id: superpowers-dsh` stays as
+  it is. Taking upstream's `name` here silently breaks activation (this
+  happened once already: the package was renamed to a scope in task 4 and
+  the stale `name` was not updated, so the plugin installed but never
+  activated).
+- `lib/index.js` — keep our scoped provider `name`
+  (`@chunqing286/superpowers-dsh`) and `PACKAGED_SKILL_RANK` if upstream
+  changes it; take upstream's other changes.
 
 Resolution principle for all of them: **re-point at the
 `references/security-*.md` files** against upstream's new text.
@@ -178,7 +189,9 @@ files, which have no cap) until the file is under the limit again.
   upstream version, increments on re-syncs of the same one).
 - Git tag: **`sec-v<upstream version>-<N>`**, mirroring the npm version.
 
-The first release is npm `0.4.0-sec.2`, tag **`sec-v0.4.0-2`**. (The tag
+The current release is npm `0.4.0-sec.2`, tag **`sec-v0.4.0-2`**. (The first
+release, `0.4.0-sec.1` / tag `sec-v0.4.0-1`, is deprecated: it installed but
+did not activate.) (The tag
 carries the counter because a counter-less `sec-v0.4.0` would collide on the
 second publish of the same upstream line.)
 

@@ -6,7 +6,8 @@ security-audit fork of the upstream port
 on any machine.
 
 - Fork repository: <https://github.com/chunqing286/superpowers-dsh>
-- npm package: **`@chunqing286/superpowers-dsh`** (first release `0.4.0-sec.2`,
+- npm package: **`@chunqing286/superpowers-dsh`** (current release `0.4.0-sec.2`;
+  the first, `0.4.0-sec.1`, is deprecated on npm — see Rollback),
   based on the upstream port's v0.4.0; skill content from obra/superpowers
   v7.0.1)
 - This file ships in the GitHub repository only — it is **not** inside the npm
@@ -27,7 +28,10 @@ The npm package is scoped (`@chunqing286/superpowers-dsh`), but
 `superpowers-dsh`. That is intentional: it lets later composition layers keep
 addressing the row by the same id the upstream port uses. Do not "fix" either
 side — the scoped name is correct in `package.json`, the unscoped id is
-correct in `cordis.patch.yml`.
+correct in `cordis.patch.yml`. But the row's **`name:`** field is the
+package specifier the loader imports, so it must be the **scoped** name
+`@chunqing286/superpowers-dsh`, kept in lockstep with `package.json`'s
+`name`; only the `id` stays unscoped.
 
 ## Prerequisites
 
@@ -200,8 +204,8 @@ re-run the verification steps above.
 
 ## Rollback
 
-Install the previously published `-sec.N` version. **`0.4.0-sec.1` was
-withdrawn** (it installs but fails to activate — that defect is what
+Install the previously published `-sec.N` version. **`0.4.0-sec.1` is
+deprecated on npm** (it installs but fails to activate — that defect is what
 `0.4.0-sec.2` fixes), so never roll back to it; from `0.4.0-sec.2` onward,
 the previous `-sec.N` version is a valid rollback target. List what exists:
 
@@ -209,10 +213,13 @@ the previous `-sec.N` version is a valid rollback target. List what exists:
 npm view @chunqing286/superpowers-dsh versions
 ```
 
-Then install the one you want back, e.g.:
+Then install the version you want back. Right now the only published
+`-sec.N` versions are `0.4.0-sec.2` (the current one) and `0.4.0-sec.1`
+(deprecated), so there is no valid rollback target yet — the first one
+appears when the next `-sec.N` ships:
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
+dsh plugin --profile web add @chunqing286/superpowers-dsh@<version>
 ```
 
 Restart the profile afterwards.

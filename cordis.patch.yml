@@ -9,7 +9,7 @@
 # address the row by it, so it stays `superpowers-dsh`); `name` is the plugin
 # package specifier the loader imports — it must exactly follow the `name` in
 # package.json. They diverged when the package was renamed to the scoped
-# `@chunqing286/superpowers-dsh` (task 4), and the stale `name` broke
+# `@chunqing286/superpowers-dsh`, and the stale `name` broke
 # activation. If the package name ever changes again, change `name` here in
 # the same commit.
 - insert:
