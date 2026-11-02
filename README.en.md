@@ -191,10 +191,12 @@ dsh plugin --profile web remove @chunqing286/superpowers-dsh
   `npm config set registry https://registry.npmmirror.com`
 - A plugin installed from a folder or `file:` spec is linked, not copied:
   changes to that folder take effect after the next profile restart. In this
-  fork that form is **development-only** — it is a machine-specific absolute
-  path, not a distribution method; cross-machine distribution supports only
-  the npm registry spec (see the `link:` prohibition in
-  [DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md)).
+  fork that form is **development-only** — a machine-specific absolute path,
+  not a distribution method. For another machine: the npm registry spec is
+  the **recommended** form (version-pinned); a tarball transferred to the
+  target machine also works; the GitHub forms install the same fork from the
+  branch head (no version pin). Full taxonomy:
+  [DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md).
 - Consumers need **no npm account and no 2FA** — installing is a plain
   package download.
 

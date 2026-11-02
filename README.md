@@ -172,9 +172,10 @@ dsh plugin --profile web remove @chunqing286/superpowers-dsh
   @chunqing286/superpowers-dsh` 更快：`npm config set registry https://registry.npmmirror.com`
 - 从文件夹或 `file:` 规格安装的插件是链接安装（不是复制）：修改该文件夹后，
   下次重启 profile 生效。在本 fork 里这只是**开发自用**的形式——它是机器相关的
-  绝对路径，不是分发方式；跨机器分发只支持 npm registry 规格（见
+  绝对路径，不作为分发方式。跨机器安装：**推荐 npm registry 规格**（版本锁定）；
+  把 tarball 传到目标机器再装也可行；GitHub 形式装的是同一 fork 的分支头
+  （无版本锁）。完整分类见
   [DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md)
-  对 `link:` 的禁止说明）
 - 使用者**不需要 npm 账号，也不需要 2FA**——安装只是普通的包下载
 
 ## DSH 版本兼容性

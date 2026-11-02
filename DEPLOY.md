@@ -60,16 +60,22 @@ Plugins page takes the package name and resolves the latest version:
    action `install_bundle` and target
    `@chunqing286/superpowers-dsh@0.4.0-sec.1`.
 
-> **Never install with a `link:` spec.** A `link:` spec is an absolute,
-> machine-specific path that breaks on every other machine.
+> **Never distribute with a `link:` spec.** As a way to *get the plugin onto
+> another machine* it is banned: a `link:` spec is an absolute,
+> machine-specific path that breaks on every other machine. (Installing from
+> a local folder on *your own* machine to develop the plugin is fine — see
+> form 4 below.)
 
 The READMEs carry more install sections than the three forms above. Where
 each form stands:
 
 1. **npm registry spec** (the three forms above) — the **recommended**
-   distribution form: works from any machine, and it is **version-pinned**
-   (`0.4.0-sec.1`), so you can reproduce the install, pin it, and roll back
-   by version.
+   distribution form: works from any machine. The CLI and in-session forms
+   are **version-pinned** (`@chunqing286/superpowers-dsh@0.4.0-sec.1`), so
+   you can reproduce the install, pin it, and roll back by version; the
+   desktop **Plugins page** takes only the package name and resolves the
+   **latest published version** — it is *not* pinned and moves as new
+   versions are published.
 2. **GitHub-URL installs** — the READMEs' "Simplest: one command"
    (`github:chunqing286/superpowers-dsh`), the "let the Harness agent
    install this link" prompt, and "Install from GitHub" (the clone URL):
@@ -84,8 +90,9 @@ each form stands:
    the registry.
 4. **Local folder / `file:` spec** (same README section) — the only
    genuinely **machine-specific** form: an absolute path, linked rather
-   than copied, live-editable. Development only; never a distribution
-   method (this is the `link:` case the warning above bans).
+   than copied, live-editable. Allowed for developing the plugin on your
+   own machine; banned as a distribution method — see the `link:` warning
+   above.
 
 Only form 4 is machine-specific.
 
