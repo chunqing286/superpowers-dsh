@@ -290,6 +290,15 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 `dsh.superpowersUpstream`）。本节说的是技能内容的上游（obra/superpowers），
 不是本仓库 fork 自的上游 port（LayneChai/superpowers-dsh）。
 
+> ⚠️ **本 fork 里不要跑同步脚本。** `scripts/sync-from-upstream.mjs`
+> （等价于 `npm run sync -- <checkout>`）会**整体替换 `skills/`**，从而删掉本 fork 新增的
+> `skills/subagent-driven-development/references/` 下的安全文档（`security-loop.md`、
+> `security-review-part.md`、`security-kit.md`、`security-final-review.md`、
+> `threat-modeler-prompt.md`、`plan-security-section.md`），并把 4 个薄壳化改过的上游文件
+> 还原成上游原文——而且**不会报错**（它的断言只检查每条适配是否命中）。
+> 本 fork 跟随上游 port 的方式是 **`git rebase upstream/main`**，见
+> [`UPSTREAM-SYNC.md`](UPSTREAM-SYNC.md)。
+
 `skills/` 是**生成产物**，不要手改。同步逻辑写在两个地方，改它们再重跑即可：
 
 - `scripts/sync-from-upstream.mjs` —— 拉上游技能树 + 重放所有 DSH 适配
@@ -419,7 +428,8 @@ node scripts/check-dsh-compat.mjs
 frontmatter 开头（`name` + `description`，可选 `whenToUse`），无需改代码。
 
 注意：`skills/` 是上游同步的生成目录，**重跑 `scripts/sync-from-upstream.mjs`
-会整体重建它**，直接放进去的自建技能会被删掉。两个安全位置：
+会整体重建它**，直接放进去的自建技能会被删掉；在本 fork 里重跑它还会连带删掉安全改造文件
+（见上面的警告，所以**不要在 fork 里重跑**）。两个安全位置：
 
 - 放到 `$DSH_HOME/skills/`（用户级）或项目的 `.dsh/skills/` —— 与插件无关，
   最省事；

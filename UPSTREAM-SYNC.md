@@ -68,37 +68,6 @@ dsh plugin --profile web add @chunqing286/superpowers-dsh@<version>-sec.N
 release reports 15 skills registered, 84 files checked, and the next
 upstream release will change both numbers.
 
-## Never run `npm run sync` in this fork
-
-**`npm run sync` (`scripts/sync-from-upstream.mjs`) is destructive in this
-fork — do not use it to pull upstream.** The script serves the upstream
-*port* repo's own re-porting from obra/superpowers, not this fork's sync
-with the upstream port. Its source is **obra/superpowers** (plus
-`port/overrides/`), and it **deletes and replaces the whole `skills/`
-directory** (`rm -r`, then rename a staging copy into place). Running it
-here would:
-
-- delete this fork's six added security files
-  (`skills/subagent-driven-development/references/security-loop.md`,
-  `security-review-part.md`, `security-kit.md`, `security-final-review.md`,
-  `references/threat-modeler-prompt.md`, and
-  `references/plan-security-section.md`);
-- restore the four thin-shell-modified upstream files
-  (`skills/subagent-driven-development/SKILL.md`,
-  `task-reviewer-prompt.md`, `references/final-review.md`, and
-  `skills/writing-plans/SKILL.md`) to their upstream text — erasing the
-  security dimension;
-- and **not report any failure**: the script's assertions only check that
-  each transform matched its anchor, not that the fork's files still exist,
-  so it exits successfully leaving a `skills/` tree with no security
-  dimension.
-
-The correct way to pull the upstream port is the **git rebase** loop above
-(`git fetch upstream` → `git rebase upstream/main`). If a re-port from obra
-is genuinely needed (rare), first confirm the working tree is clean, do it
-on a separate branch, and afterwards check with `git diff` that the security
-files above are all still present.
-
 **`npm publish` prerequisites.** The package is owned by the npm account
 `chunqing286`; the publisher must be logged in — `npm whoami` prints
 `chunqing286` — with publish rights for the `@chunqing286` scope, using the
@@ -188,6 +157,38 @@ Specifically:
 
 After resolving: `git rebase --continue`, then `npm run verify` before
 committing anything else.
+
+## Never run the upstream sync script in this fork
+
+**`scripts/sync-from-upstream.mjs <obra-checkout>` (equivalently
+`npm run sync -- <checkout>`) is destructive in this fork — do not use it to
+pull upstream.** (Bare `npm run sync` without a checkout path only prints its
+usage and exits without writing anything.) The script serves the upstream
+*port* repo's own re-porting from obra/superpowers, not this fork's sync
+with the upstream port. Its source is **obra/superpowers** (plus
+`port/overrides/`), and it **deletes and replaces the whole `skills/`
+directory** (`rm -r`, then rename a staging copy into place). Running it
+here would:
+
+- delete this fork's six added security files, all under
+  `skills/subagent-driven-development/references/`: `security-loop.md`,
+  `security-review-part.md`, `security-kit.md`, `security-final-review.md`,
+  `threat-modeler-prompt.md`, `plan-security-section.md`;
+- restore the four thin-shell-modified upstream files to their upstream text
+  (`skills/subagent-driven-development/SKILL.md`,
+  `skills/subagent-driven-development/task-reviewer-prompt.md`,
+  `skills/subagent-driven-development/references/final-review.md`,
+  `skills/writing-plans/SKILL.md`) — erasing the security dimension;
+- and **not report any failure**: the script's assertions only check that
+  each transform matched its anchor, not that the fork's files still exist,
+  so it exits successfully leaving a `skills/` tree with no security
+  dimension.
+
+The correct way to pull the upstream port is the **git rebase** loop above
+(`git fetch upstream` → `git rebase upstream/main`). If a re-port from obra
+is genuinely needed (rare), first confirm the working tree is clean, do it
+on a separate branch, and afterwards check with `git diff` that the security
+files above are all still present.
 
 ## The byte-cap trap
 
