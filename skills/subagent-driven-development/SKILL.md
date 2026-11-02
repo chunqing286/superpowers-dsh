@@ -268,6 +268,13 @@ needed.
 - **Reviewer inputs:** the task reviewer gets three paths — the same brief
   file, the report file, and the review package — plus the global
   constraints that bind the task.
+- **Security constraints:** a plan's `## Security Constraints` section
+  binds this task where the component path a constraint names appears in
+  the task's `Files:` list (rules: [security-loop.md](references/security-loop.md)).
+  Pass the bound constraints verbatim (`[SEC-0N] ...` form) with
+  [security-review-part.md](references/security-review-part.md), or the
+  literal `No security constraints bind this task.` when none bind. A plan
+  with no such section is a plan gap: ledger it, never skip silently.
 - The global-constraints block you hand the reviewer is its attention
   lens. Copy the binding requirements verbatim from the plan's Global
   Constraints section or the spec: exact values, exact formats, and the

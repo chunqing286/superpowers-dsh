@@ -7,6 +7,16 @@ code quality.
 **Purpose:** Verify one task's implementation matches its requirements (nothing
 more, nothing less) and is well-built (clean, tested, maintainable)
 
+**Security part:** [references/security-review-part.md](references/security-review-part.md)
+is the security dimension of this template — the same review seat, one extra
+input block, one extra report section, output format otherwise unchanged.
+Always append its content when dispatching from this template and fill its
+`[SECURITY_CONSTRAINTS]` block: the binding constraints copied verbatim in
+the plan's `[SEC-0N] ...` form, or exactly
+`No security constraints bind this task.` when no constraint binds the task.
+The binding rule and the plan-gap rule live in
+[references/security-loop.md](references/security-loop.md).
+
 ```
 Subagent (general-purpose):
   description: "Review Task N (spec + quality)"

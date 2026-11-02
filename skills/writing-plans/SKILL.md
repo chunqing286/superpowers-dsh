@@ -74,6 +74,13 @@ naming and copy rules, platform requirements — one line each, with exact
 values copied verbatim from the spec. Every task's requirements implicitly
 include this section.]
 
+## Security Constraints
+
+[The controls this system must enforce — one per constraint, each naming
+the component it governs, the exact behavior required, the attack path it
+closes, and the test that proves it. Binds every task touching the named
+component; each bound task references it and owns its test.]
+
 ## Review Focus
 
 [The five input classes or failure modes the spec implies but no task's
@@ -88,6 +95,13 @@ owns the code, in that task's own step style.]
 
 ---
 ```
+
+The `## Security Constraints` section comes from the threat model, not from
+memory: dispatch
+[threat-modeler-prompt.md](../subagent-driven-development/references/threat-modeler-prompt.md)
+before writing it; the section's format and the constraint-to-task handoff
+are in
+[plan-security-section.md](../subagent-driven-development/references/plan-security-section.md).
 
 ## Task Structure
 
@@ -172,7 +186,11 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 **4. Review Focus:** For each input class or failure mode the spec implies, is there a task whose tests exercise it? The five uncovered ones most likely to bite a person go in the Review Focus section, and each line there gets its test added to the owning task. An empty section means you checked and found none, not that you skipped the check.
 
-**5. Proportion:** Compare the plan's length to the spec's. A plan several times longer than the spec it implements is a transcript of the program, not a plan. If code blocks are most of the document, replace bodies with signatures, test names and assertions, and check that each step is still unambiguous.
+**5. Security constraints:** Every constraint has a task that owns its
+component and a test in that task that exercises it; a trust boundary no
+constraint covers is a gap in the threat model, not the plan.
+
+**6. Proportion:** Compare the plan's length to the spec's. A plan several times longer than the spec it implements is a transcript of the program, not a plan. If code blocks are most of the document, replace bodies with signatures, test names and assertions, and check that each step is still unambiguous.
 
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
