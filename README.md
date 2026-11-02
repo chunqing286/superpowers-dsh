@@ -124,8 +124,8 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ### 从 tarball 或本地文件夹安装
 
 ```sh
-# tarball（例如 Release 里的 superpowers-dsh-0.1.0.tgz）
-dsh plugin --profile web add C:\路径\to\superpowers-dsh-0.1.0.tgz
+# tarball（例如 Release 里的 chunqing286-superpowers-dsh-0.4.0-sec.1.tgz）
+dsh plugin --profile web add C:\路径\to\chunqing286-superpowers-dsh-0.4.0-sec.1.tgz
 
 # 或解压后的插件文件夹（pnpm 以链接方式安装，改完重启即生效）
 dsh plugin --profile web add C:\路径\to\superpowers-dsh

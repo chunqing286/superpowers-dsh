@@ -139,8 +139,8 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ### Install from a tarball or a local folder
 
 ```sh
-# tarball (e.g. the release asset superpowers-dsh-0.1.0.tgz)
-dsh plugin --profile web add C:\path\to\superpowers-dsh-0.1.0.tgz
+# tarball (e.g. the release asset chunqing286-superpowers-dsh-0.4.0-sec.1.tgz)
+dsh plugin --profile web add C:\path\to\chunqing286-superpowers-dsh-0.4.0-sec.1.tgz
 
 # or the unpacked package folder (pnpm links it, so edits take effect on restart)
 dsh plugin --profile web add C:\path\to\superpowers-dsh

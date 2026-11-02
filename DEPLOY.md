@@ -37,10 +37,10 @@ correct in `cordis.patch.yml`.
 
 ## Install
 
-There are exactly three supported ways to install, and all of them install
-from the npm registry — the CLI and in-session forms take the registry spec
-`@chunqing286/superpowers-dsh@<version>`, while the desktop Plugins page
-takes the package name and resolves the latest version:
+There are three recommended, supported **distribution** forms, and all of
+them install from the npm registry — the CLI and in-session forms take the
+registry spec `@chunqing286/superpowers-dsh@<version>`, while the desktop
+Plugins page takes the package name and resolves the latest version:
 
 1. **Desktop app (recommended for desktop users):** open the in-app
    **Plugins** page and add the package by name:
@@ -62,9 +62,13 @@ takes the package name and resolves the latest version:
 
 > **Never install with a `link:` spec.** A `link:` spec is an absolute,
 > machine-specific path that breaks on every other machine. The npm registry
-> spec is the only supported install form. (A local folder or `file:` install
-> is fine for developing the plugin on your own machine — it is just not a
-> distribution method.)
+> spec is the only supported **distribution** form. The READMEs'
+> upstream-derived install sections ("Install from GitHub", "Install from a
+> tarball or a local folder") also show GitHub-URL and tarball/local-folder
+> installs: those work against a local checkout but are machine-specific and
+> are **not** a supported way to install this fork on another machine. (A
+> local folder or `file:` install is fine for developing the plugin on your
+> own machine — it is just not a distribution method.)
 
 ### Replacing an existing `superpowers-dsh` bundle
 

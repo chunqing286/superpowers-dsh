@@ -55,6 +55,8 @@ npm publish                  # prerequisites below
 
 git tag sec-v<upstream version>-<N>        # e.g. sec-v0.5.0-1
 git push --force-with-lease origin main    # see below
+git push --force-with-lease origin main:local/security-audit
+                                           # keep the mirror branch identical to main
 git push origin sec-v<upstream version>-<N>
 
 # Finally, update your own machine(s) — see DEPLOY.md, "Upgrade":
@@ -83,12 +85,16 @@ the meantime. Never force-push anywhere else, and never push to `upstream`.
 
 ## Resolving conflicts
 
-`git diff --stat v0.4.0..HEAD` shows exactly what this fork changes relative
-to the upstream port, and that set is the whole conflict surface. It is
-**four upstream skill files** plus **three fork-owned files** — an earlier
-version of this document listed only three skill files; that was wrong, and
-the correction matters because `references/final-review.md` carries the
-branch-level security review.
+`git diff --stat v0.4.0..HEAD` shows the fork's **full delta** relative to
+the upstream port: 15 paths. Only the **seven files that already exist
+upstream** are conflict-bearing — **four upstream skill files** plus the
+**three fork-owned files** listed below. The other eight are fork-only
+additions (`DEPLOY.md`, `UPSTREAM-SYNC.md`, and the six new
+`skills/subagent-driven-development/references/*.md` files); a file that
+exists only in the fork can never conflict. (An earlier version of this
+document listed only three skill files; that was wrong, and the correction
+matters because `references/final-review.md` carries the branch-level
+security review.)
 
 The four upstream skill files, each carrying a minimal security pointer:
 
@@ -109,8 +115,9 @@ The three fork-owned files the upstream port also touches:
 
 - `package.json` — upstream will bump `version` and may change any other
   field. Keep the scoped name `@chunqing286/superpowers-dsh`, the `-sec.N`
-  version, and the fork's `repository` / `homepage` / `bugs` URLs; take
-  upstream's other fields.
+  version, the fork's `description` (the security-audit sentence), and the
+  fork's `repository` / `homepage` / `bugs` URLs; take upstream's other
+  fields.
 - `README.md` / `README.en.md` — keep this fork's section (the
   security-audit line) and the fork-pointing install commands; take
   upstream's prose changes everywhere else.
