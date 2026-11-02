@@ -22,8 +22,45 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 （`skills/<name>/SKILL.md`），通过 `import.meta.url` 定位——这是包的
 组装事实，不需要任何用户配置。
 
+## 本 Fork：安全审计线（@chunqing286/superpowers-dsh）
+
+本仓库是 [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh)
+的 **fork**，发布为 npm 包 **`@chunqing286/superpowers-dsh`**（首个版本
+`0.4.0-sec.1`，基于上游 v0.4.0）。相对上游 v0.4.0，它多了一条**安全审计维度**，
+进入两条开发流程：
+
+- **`writing-plans`**：写计划前先威胁建模，每份计划必须带
+  `## Security Constraints` 一节；
+- **`subagent-driven-development`**：每个任务简报原样携带约束（无约束时写字面量
+  `No security constraints bind this task.`），任务级评审新增安全部分，分支级
+  终审新增安全终审。
+
+安全内容全部打进 npm 包，随安装生效，不依赖手改本机文件。
+
+**安装**（Windows PowerShell，`dsh` 在 PATH 上）：
+
+```powershell
+dsh plugin --profile <profile名> add @chunqing286/superpowers-dsh@0.4.0-sec.1
+```
+
+桌面应用用户请改用应用内 **Plugins 页**按包名添加——桌面版运行在 `desktop`
+profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id 仍是
+`superpowers-dsh`（见 `cordis.patch.yml`），只有 npm 包名带作用域，两者都是
+有意为之，不要去"修正"。
+
+**与上游的同步关系**：本 fork 的 `main` 就是安全线 = 上游全部提交 + 本 fork 的
+安全提交。上游发新版后 rebase 到 `upstream/main`、按固定原则解冲突、验证、
+把版本号 bump 为 `<上游版本>-sec.N` 再发布。
+
+完整的安装 / 验证 / 升级 / 回滚流程见
+[DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md)，
+上游同步与冲突处理见
+[UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md)。
+这两个文件不进 npm 包，只在 GitHub 仓库里——所以上面已给出安装命令本身。
+
 ## 目录
 
+- [本 Fork：安全审计线（@chunqing286/superpowers-dsh）](#本-fork安全审计线chunqing286superpowers-dsh)
 - [在 DeepSeek Harness 中安装与使用](#在-deepseek-harness-中安装与使用)
 - [DSH 版本兼容性](#dsh-版本兼容性)
 - [技能列表](#技能列表)

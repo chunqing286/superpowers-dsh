@@ -23,8 +23,52 @@ skills. Skill bodies ship inside the package (`skills/<name>/SKILL.md`) and
 are located from `import.meta.url` — an assembly fact of the package, never
 user configuration.
 
+## This fork: the security-audit line (@chunqing286/superpowers-dsh)
+
+This repository is a **fork** of
+[LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh),
+published to npm as **`@chunqing286/superpowers-dsh`** (first release
+`0.4.0-sec.1`, based on upstream v0.4.0). Over upstream v0.4.0 it adds a
+**security-audit dimension** wired into two development flows:
+
+- **`writing-plans`**: threat-model before writing the plan; every plan
+  carries a `## Security Constraints` section;
+- **`subagent-driven-development`**: every task brief passes the binding
+  constraints verbatim (or the literal `No security constraints bind this
+  task.`), the per-task review gains a security part, and the branch-level
+  final review gains a security pass.
+
+The security content ships inside the npm package and takes effect on
+install — no hand-editing of local files.
+
+**Install** (Windows PowerShell, `dsh` on `PATH`):
+
+```powershell
+dsh plugin --profile <profile-name> add @chunqing286/superpowers-dsh@0.4.0-sec.1
+```
+
+Desktop-app users: add the package by name from the in-app **Plugins** page
+instead — the desktop build runs in its own `desktop` profile, and
+`--profile` can install into a different one. Note that the DSH plugin row
+id stays `superpowers-dsh` (see `cordis.patch.yml`); only the npm package
+name is scoped. Both are deliberate — do not "fix" either.
+
+**Sync relationship with upstream**: the fork's `main` *is* the security
+line — upstream's commits plus this fork's security commits. When upstream
+releases, the fork rebases onto `upstream/main`, resolves conflicts by a
+fixed rule, verifies, bumps the version to `<upstream version>-sec.N`, and
+publishes.
+
+Full install / verify / upgrade / rollback procedures:
+[DEPLOY.md](https://github.com/chunqing286/superpowers-dsh/blob/main/DEPLOY.md).
+Upstream sync and conflict handling:
+[UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md).
+Both files live in the GitHub repo only — they are not in the npm tarball —
+which is why the install command is given above, not just a pointer.
+
 ## Contents
 
+- [This fork: the security-audit line (@chunqing286/superpowers-dsh)](#this-fork-the-security-audit-line-chunqing286superpowers-dsh)
 - [Install & use in your DeepSeek Harness](#install--use-in-your-deepseek-harness)
 - [DSH version compatibility](#dsh-version-compatibility)
 - [Skills](#skills)
