@@ -433,8 +433,8 @@ node scripts/check-dsh-compat.mjs
 `list()` 会自动发现包里任何 `skills/<kebab-name>/SKILL.md`——只要它以 YAML
 frontmatter 开头（`name` + `description`，可选 `whenToUse`），无需改代码。
 
-注意：`skills/` 里的**上游技能**是上游同步的生成目录，**重跑 `scripts/sync-from-upstream.mjs`
-会整体重建它**，直接放进去的自建技能会被删掉；本 fork 手工维护的安全文档也不在其中，
+注意：`skills/` 里的**上游技能内容**是上游同步生成的，**重跑 `scripts/sync-from-upstream.mjs`
+会整体重建它**，直接放进去的自建技能会被删掉；本 fork 手工维护的安全文档不属于生成内容，
 在本 fork 里重跑它还会连带删掉那些安全文件（见上面的警告，所以**不要在 fork 里重跑**）。
 两个安全位置：
 
