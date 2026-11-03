@@ -41,7 +41,7 @@ Insert this block into `## What Was Requested`, right after
     Security constraints that bind this task:
     [SECURITY_CONSTRAINTS]
 
-    If that block says "No security constraints bind this task", this task has
+    If that block says "No security constraints bind this task.", this task has
     no trust-boundary surface and you skip Part 3 entirely — but say so in
     your report's Security Coverage section, so the controller knows the
     dimension was considered and dismissed rather than forgotten.

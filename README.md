@@ -294,10 +294,11 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 > （等价于 `npm run sync -- <checkout>`）会**整体替换 `skills/`**，从而删掉本 fork 新增的
 > `skills/subagent-driven-development/references/` 下的安全文档（`security-loop.md`、
 > `security-review-part.md`、`security-kit.md`、`security-final-review.md`、
-> `threat-modeler-prompt.md`、`plan-security-section.md`），并把 4 个薄壳化改过的上游文件
+> `threat-modeler-prompt.md`、`plan-security-section.md`），并把 5 个薄壳化改过的上游文件
 > （`skills/subagent-driven-development/SKILL.md`、
 > `skills/subagent-driven-development/task-reviewer-prompt.md`、
 > `skills/subagent-driven-development/references/final-review.md`、
+> `skills/subagent-driven-development/implementer-prompt.md`、
 > `skills/writing-plans/SKILL.md`）还原成上游原文——而且**不会察觉这个损失**
 > （断言只检查每条适配是否命中，不检查 fork 的文件是否还在）。
 > 本 fork 跟随上游 port 的方式是 **`git rebase upstream/main`**，见

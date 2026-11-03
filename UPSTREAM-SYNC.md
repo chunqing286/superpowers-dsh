@@ -92,8 +92,8 @@ rather than silently overwritten.
 ## Resolving conflicts
 
 `git diff --stat v0.4.0..HEAD` shows the fork's **full delta** relative to
-the upstream port: 17 paths. Only the **nine files that already exist
-upstream** are conflict-bearing — **four upstream skill files** plus the
+the upstream port: 18 paths. Only the **ten files that already exist
+upstream** are conflict-bearing — **five upstream skill files** plus the
 **five more upstream files the fork modifies**, listed below. The other
 eight are fork-only
 additions (`DEPLOY.md`, `UPSTREAM-SYNC.md`, and the six new
@@ -103,7 +103,7 @@ document listed only three skill files; that was wrong, and the correction
 matters because `references/final-review.md` carries the branch-level
 security review.)
 
-The four upstream skill files, each carrying a minimal security pointer:
+The five upstream skill files, each carrying a minimal security pointer:
 
 - `skills/subagent-driven-development/SKILL.md` — the security bullet
   (constraints passed verbatim / `No security constraints bind this task.` /
@@ -117,6 +117,10 @@ The four upstream skill files, each carrying a minimal security pointer:
   branch-level security review)
 - `skills/writing-plans/SKILL.md` — the `## Security Constraints` section
   and the `references/threat-modeler-prompt.md` pointer
+- `skills/subagent-driven-development/implementer-prompt.md` — the dispatcher's
+  security note and the `## Security Constraints` block in the implementer
+  dispatch template (the binding constraints reach the implementer verbatim;
+  losing it silently leaves the constraints reaching only the reviewer)
 
 The five upstream files the fork modifies (they exist upstream — the
 fork-only additions are the other group):
@@ -174,10 +178,11 @@ here would:
   `skills/subagent-driven-development/references/`: `security-loop.md`,
   `security-review-part.md`, `security-kit.md`, `security-final-review.md`,
   `threat-modeler-prompt.md`, `plan-security-section.md`;
-- restore the four thin-shell-modified upstream files to their upstream text
+- restore the five thin-shell-modified upstream files to their upstream text
   (`skills/subagent-driven-development/SKILL.md`,
   `skills/subagent-driven-development/task-reviewer-prompt.md`,
   `skills/subagent-driven-development/references/final-review.md`,
+  `skills/subagent-driven-development/implementer-prompt.md`,
   `skills/writing-plans/SKILL.md`) — erasing the security dimension;
 - and **not detect the loss**: the script's assertions only check that each
   transform matched its anchor, not that the fork's files still exist, so it

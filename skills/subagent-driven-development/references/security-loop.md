@@ -18,7 +18,7 @@ follows.
 
 | File | Insertion point | When it runs |
 |---|---|---|
-| [threat-modeler-prompt.md](threat-modeler-prompt.md) | Dispatched by writing-plans just before it writes the `## Security Constraints` section (greenfield: after brainstorming) | Greenfield project: produce the security constraints |
+| [threat-modeler-prompt.md](threat-modeler-prompt.md) | Dispatched by writing-plans just before it writes the `## Security Constraints` section (greenfield: after brainstorming) | Greenfield: produce the security constraints; an existing project: run it once over the existing spec/plan |
 | [plan-security-section.md](plan-security-section.md) | The `## Security Constraints` section of the plan writing-plans produces | Existing plan: add the section retroactively |
 | [security-review-part.md](security-review-part.md) | Spliced into `task-reviewer-prompt.md` at dispatch | Every task review (injected per task) |
 | [security-final-review.md](security-final-review.md) | Spliced into the final reviewer's dispatch | The final whole-branch review, once per branch |

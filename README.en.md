@@ -335,10 +335,11 @@ this fork tracks (LayneChai/superpowers-dsh).
 > deletes this fork's added security documents under
 > `skills/subagent-driven-development/references/` (`security-loop.md`,
 > `security-review-part.md`, `security-kit.md`, `security-final-review.md`,
-> `threat-modeler-prompt.md`, `plan-security-section.md`) and reverts the four
+> `threat-modeler-prompt.md`, `plan-security-section.md`) and reverts the five
 > thin-shell-edited upstream files (`skills/subagent-driven-development/SKILL.md`,
 > `skills/subagent-driven-development/task-reviewer-prompt.md`,
 > `skills/subagent-driven-development/references/final-review.md`,
+> `skills/subagent-driven-development/implementer-prompt.md`,
 > `skills/writing-plans/SKILL.md`) to their upstream text — and it **does not
 > detect the loss** (its assertions check only that each adaptation matched,
 > not that the fork's files still exist).
