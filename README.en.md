@@ -28,7 +28,7 @@ user configuration.
 This repository is a **fork** of the upstream port
 [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh),
 published to npm as **`@chunqing286/superpowers-dsh`** (current release
-`0.4.0-sec.2`, based on the upstream port's v0.4.0; the first release,
+`0.4.0-sec.3`, based on the upstream port's v0.4.0; the first release,
 `0.4.0-sec.1`, is deprecated — it installs but does not activate). Over the upstream port
 v0.4.0 it adds a
 **security-audit dimension** wired into two development flows:
@@ -47,7 +47,7 @@ install — no hand-editing of local files.
 **Install** (Windows PowerShell, `dsh` on `PATH`):
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
 ```
 
 (Replace `web` with your profile name; desktop-app users see the next
@@ -74,7 +74,7 @@ which is why the install command is given above, not just a pointer.
 The sections below describe the same plugin; their install commands all
 refer to this fork's package, not the upstream port's unscoped package.
 Among them: for another machine prefer the **registry spec**
-`@chunqing286/superpowers-dsh@0.4.0-sec.2` — it is version-pinned, so the
+`@chunqing286/superpowers-dsh@0.4.0-sec.3` — it is version-pinned, so the
 install is reproducible and rollback-able by version; the GitHub forms
 install the same fork from the **branch head** (no version pin); the
 local-folder / `file:` form is development-only and machine-specific.
@@ -129,7 +129,7 @@ The package is published on npm as `@chunqing286/superpowers-dsh` (synced to
 the npmmirror mirror for mainland China):
 
 ```sh
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.2
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
 ```
 
 > Use the `dsh plugin` form — a plain `npm install @chunqing286/superpowers-dsh` installs
@@ -146,8 +146,8 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ### Install from a tarball or a local folder
 
 ```sh
-# tarball (e.g. the one `npm pack` produces: chunqing286-superpowers-dsh-0.4.0-sec.2.tgz)
-dsh plugin --profile web add C:\path\to\chunqing286-superpowers-dsh-0.4.0-sec.2.tgz
+# tarball (e.g. the one `npm pack` produces: chunqing286-superpowers-dsh-0.4.0-sec.3.tgz)
+dsh plugin --profile web add C:\path\to\chunqing286-superpowers-dsh-0.4.0-sec.3.tgz
 
 # or the unpacked package folder (pnpm links it, so edits take effect on restart)
 dsh plugin --profile web add C:\path\to\superpowers-dsh
@@ -175,7 +175,7 @@ A successful install looks like this:
 Point `--profile` at whichever profile you run:
 
 ```sh
-dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.2
+dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.3
 dsh --profile headless --dump-config
 ```
 
@@ -221,7 +221,7 @@ Upstream-port (LayneChai/superpowers-dsh) audit snapshot: checked
 | Published versions carrying them | **31 released versions each** of `@deepseek-ai/dsh-skill` and `@deepseek-ai/dsh-app-boot` |
 | Per-version audit | **31 / 31 identical** — from the first release `0.0.1-rc.1` through the newest `0.2.1-alpha.1`, no signature or semantics changed |
 | End-to-end run | `lib/index.js` mounted into the **real `SkillRegistry`** of local DSH `0.2.0-rc.2`: `list()` returned 15 skills and every `get()` returned a body and a `resourceBase` |
-| This plugin's version | `0.4.0-sec.2` (skill content synced from obra/superpowers `v7.0.1`) |
+| This plugin's version | `0.4.0-sec.3` (skill content synced from obra/superpowers `v7.0.1`) |
 | Runtime dependencies | None. Node built-ins only, so a DSH dependency-tree change cannot break it |
 | Node.js | Verified on `v22.22.2`; DSH declares no `engines`, and neither does this plugin |
 

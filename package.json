@@ -1,7 +1,7 @@
 {
   "name": "@chunqing286/superpowers-dsh",
   "description": "Superpowers for the DeepSeek Harness: TDD, debugging, planning, and collaboration skills adapted from obra/superpowers, with a security-audit dimension wired into the development loop",
-  "version": "0.4.0-sec.2",
+  "version": "0.4.0-sec.3",
   "private": false,
   "type": "module",
   "main": "lib/index.js",
