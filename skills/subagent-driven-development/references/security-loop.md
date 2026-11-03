@@ -9,18 +9,23 @@ auditor" role would re-report the same issues the task review finds, in a
 format the re-review template cannot adjudicate, doubling noise until the
 fix loop drowns. So the security dimension rides the existing seats.
 
+A Chinese overview of this dimension — the design, the insertion points, and
+how it divides the work with the DSH `review` tool — is in
+[security-kit.md](security-kit.md). This file holds the rules the workflow
+follows.
+
 ## Four Files, Four Insertion Points
 
 | File | Insertion point | When it runs |
 |---|---|---|
-| [threat-modeler-prompt.md](threat-modeler-prompt.md) | After brainstorming, before writing-plans | Greenfield project: produce the security constraints |
+| [threat-modeler-prompt.md](threat-modeler-prompt.md) | Dispatched by writing-plans just before it writes the `## Security Constraints` section (greenfield: after brainstorming) | Greenfield project: produce the security constraints |
 | [plan-security-section.md](plan-security-section.md) | The `## Security Constraints` section of the plan writing-plans produces | Existing plan: add the section retroactively |
 | [security-review-part.md](security-review-part.md) | Spliced into `task-reviewer-prompt.md` at dispatch | Every task review (injected per task) |
 | [security-final-review.md](security-final-review.md) | Spliced into the final reviewer's dispatch | The final whole-branch review, once per branch |
 
 ```
 Greenfield:
-  brainstorming → [threat-modeler] → writing-plans (+ Security Constraints section)
+  brainstorming → writing-plans → [threat-modeler] → (+ Security Constraints section)
     → SDD (per-task security review) → final review → review (security lens) → merge
 
 Existing project (already underway):
@@ -37,7 +42,9 @@ dropped.
 
 ## Three Inviolable Rules
 
-1. **The output format does not change by one character.** A security
+1. **The output format does not change by one character** — with one
+   exception: the report gains the single additive `### Security Coverage`
+   section; no existing heading and no severity level changes. A security
    finding is Critical, Important, or Minor — never a new level. Changing
    the format breaks the re-review's verdict and snaps the fix loop.
 2. **The auditor is read-only.** It never touches the working tree, the

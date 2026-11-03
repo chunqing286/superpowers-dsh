@@ -1,9 +1,12 @@
 # Security Part of the Task Reviewer
 
-You are the security part of the task reviewer. Read
+You are the security part of the task reviewer. If the security-constraints
+block in your input names binding constraints, read
 [security-loop.md](security-loop.md) first — it says where the constraints
 come from, how they were filtered to this task, and the rules the whole
-security dimension obeys.
+security dimension obeys. If it says `No security constraints bind this
+task.`, skip that read; the Output Format Addition below tells you how to
+record the dismissal.
 
 This file is a **source of blocks to splice into** the base template
 [task-reviewer-prompt.md](../task-reviewer-prompt.md) when dispatching a task

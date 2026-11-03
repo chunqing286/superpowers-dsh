@@ -31,9 +31,9 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 
 - **`writing-plans`**：写计划前先威胁建模，每份计划必须带
   `## Security Constraints` 一节；
-- **`subagent-driven-development`**：每个任务简报原样携带约束（无约束时写字面量
-  `No security constraints bind this task.`），任务级评审新增安全部分，分支级
-  终审新增安全终审。
+- **`subagent-driven-development`**：实现者的派发与任务级评审都原样收到绑定该任务的
+  约束全文（无约束时收到字面量 `No security constraints bind this task.`），
+  任务级评审新增安全部分，分支级终审新增安全终审。
 
 安全内容全部打进 npm 包，随安装生效，不依赖手改本机文件。
 
@@ -127,7 +127,7 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ### 从 tarball 或本地文件夹安装
 
 ```sh
-# tarball（例如 Release 里的 chunqing286-superpowers-dsh-0.4.0-sec.2.tgz）
+# tarball（例如 npm pack 产出的 chunqing286-superpowers-dsh-0.4.0-sec.2.tgz）
 dsh plugin --profile web add C:\路径\to\chunqing286-superpowers-dsh-0.4.0-sec.2.tgz
 
 # 或解压后的插件文件夹（pnpm 以链接方式安装，改完重启即生效）

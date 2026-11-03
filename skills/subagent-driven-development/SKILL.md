@@ -268,12 +268,14 @@ needed.
 - **Reviewer inputs:** the task reviewer gets three paths — the same brief
   file, the report file, and the review package — plus the global
   constraints that bind the task.
-- **Security constraints:** pass constraints binding this task verbatim
-  (`[SEC-0N] ...` form) with
-  [references/security-review-part.md](references/security-review-part.md),
+- **Security constraints:** pass constraints binding this task verbatim to
+  the implementer's dispatch and the reviewer (`[SEC-0N] ...` form; reviewer
+  side splices
+  [references/security-review-part.md](references/security-review-part.md)),
   or the literal `No security constraints bind this task.` when none bind.
-  A plan with no `## Security Constraints` section is a plan gap: ledger
-  it, never skip silently ([references/security-loop.md](references/security-loop.md)).
+  A plan with no `## Security Constraints` section but a trust boundary in
+  scope is a plan gap: ledger it, never skip silently
+  ([references/security-loop.md](references/security-loop.md)).
 - The global-constraints block you hand the reviewer is its attention
   lens. Copy the binding requirements verbatim from the plan's Global
   Constraints section or the spec: exact values, exact formats, and the

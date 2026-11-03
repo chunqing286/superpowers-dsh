@@ -1,10 +1,11 @@
 # Threat Modeler Prompt Template
 
-在 **brainstorming 之后、writing-plans 之前**派发一次。产出的不是"漏洞列表"，而是**安全约束清单**——
+由 **writing-plans 在写 `## Security Constraints` 一节之前**派发一次（全新项目即
+brainstorming 之后、plan 任务主体成型之前）。产出的不是"漏洞列表"，而是**安全约束清单**——
 每条约束精确到值、可被测试、归属于某个组件，并被直接写进 plan。
 
-**为什么在这个位置**：放在 brainstorming 之前还没需求，无从建模；放在 writing-plans 之后太晚，
-plan 已经把接口和文件结构定死了，安全约束会退化成"补丁式要求"，实现者当成可选项。
+**为什么在这个位置**：放在 brainstorming 之前还没需求，无从建模；等 plan 的任务主体写完
+再补就太晚，接口和文件结构已经定死，安全约束会退化成"补丁式要求"，实现者当成可选项。
 
 **为什么必须只读**：这个子代理的产物是一份约束清单。如果它顺手改了代码，你分不清哪些约束是
 "本来就该有的"、哪些是"它改出来的"。
@@ -37,7 +38,7 @@ Subagent (general-purpose):
 
     [If the project already has code, this is where the spec's abstractions meet
     reality. Read the entry points and the existing security controls:
-    [CODEBASE_SURFACE]
+    [CODEBASE_SURFACE]]
 
     If this is a greenfield project, skip this section entirely — do not invent
     an existing system to review.

@@ -39,7 +39,7 @@ git switch main
 git rebase upstream/main
 # resolve conflicts — see the next section
 
-npm run verify                 # must end with "verify-skills: OK"
+npm run verify                 # must print "verify-skills: OK"
 # re-check the SKILL.md byte cap — see "The byte-cap trap" below
 
 # Bump package.json "version" to <new upstream version>-sec.N
@@ -63,7 +63,7 @@ git push origin sec-v<upstream version>-<N>
 dsh plugin --profile web add @chunqing286/superpowers-dsh@<version>-sec.N
 ```
 
-**`npm run verify` output.** The invariant is that the run ends with
+**`npm run verify` output.** The invariant is that the run prints
 `verify-skills: OK`. The counts are a snapshot, not an invariant: this
 release reports 15 skills registered, 84 files checked, and the next
 upstream release will change both numbers.

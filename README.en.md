@@ -35,10 +35,11 @@ v0.4.0 it adds a
 
 - **`writing-plans`**: threat-model before writing the plan; every plan
   carries a `## Security Constraints` section;
-- **`subagent-driven-development`**: every task brief passes the binding
-  constraints verbatim (or the literal `No security constraints bind this
-  task.`), the per-task review gains a security part, and the branch-level
-  final review gains a security pass.
+- **`subagent-driven-development`**: the implementer's dispatch and the task
+  reviewer both receive the constraints binding the task verbatim (or the
+  literal `No security constraints bind this task.` when none bind), the
+  per-task review gains a security part, and the branch-level final review
+  gains a security pass.
 
 The security content ships inside the npm package and takes effect on
 install — no hand-editing of local files.
@@ -145,7 +146,7 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 ### Install from a tarball or a local folder
 
 ```sh
-# tarball (e.g. the release asset chunqing286-superpowers-dsh-0.4.0-sec.2.tgz)
+# tarball (e.g. the one `npm pack` produces: chunqing286-superpowers-dsh-0.4.0-sec.2.tgz)
 dsh plugin --profile web add C:\path\to\chunqing286-superpowers-dsh-0.4.0-sec.2.tgz
 
 # or the unpacked package folder (pnpm links it, so edits take effect on restart)

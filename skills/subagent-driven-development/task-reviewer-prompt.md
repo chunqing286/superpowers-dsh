@@ -219,4 +219,5 @@ Subagent (general-purpose):
   path it wrote; the package never enters the controller's context)
 
 **Reviewer returns:** Spec Compliance verdict (✅/❌/⚠️), Strengths, Issues
-(Critical/Important/Minor), Task quality verdict
+(Critical/Important/Minor), Security Coverage (per-constraint MET / VIOLATED
+/ NOT APPLICABLE, or the dismissal line), Task quality verdict

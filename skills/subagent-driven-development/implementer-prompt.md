@@ -2,6 +2,14 @@
 
 Use this template when dispatching an implementer subagent.
 
+**Security part:** the constraints that bind a task travel with the
+dispatch — the implementer gets the same text the task's reviewer gets.
+Fill `[SECURITY_CONSTRAINTS]` with those constraints, copied verbatim from
+the plan's `## Security Constraints` section in the plan's `[SEC-0N] ...`
+form, or exactly `No security constraints bind this task.` when none bind.
+The binding rule and the plan-gap rule live in
+[references/security-loop.md](references/security-loop.md).
+
 ```
 Subagent (general-purpose):
   description: "Implement Task N: [task name]"
@@ -14,6 +22,13 @@ Subagent (general-purpose):
 
     Read your task brief first: [BRIEF_FILE]
     It contains the full task text from the plan.
+
+    ## Security Constraints
+
+    These constraints bind your task. Implement them exactly as written:
+    they are part of your requirements, not suggestions.
+
+    [SECURITY_CONSTRAINTS]
 
     ## Context
 

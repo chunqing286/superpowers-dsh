@@ -77,6 +77,12 @@ naming that component; the task reviewer verifies this as part of its gate.
 在 plan 的每个任务里，**加一个 Interfaces 块之外的约束引用**。不要复制约束全文——复制会漂移
 （约束改了，任务里的副本没改，两边对不上，reviewer 判错）。
 
+**复制禁令只管 plan 文件本身，不管派发。** 禁止的是 plan 里出现第二份**持久**副本；派发提示词
+是临时产物，在派发那一刻从 `## Security Constraints` 这份唯一权威定义现拷现用，评审派发本来就
+是这么做的。而实现者的派发**必须**原样带上绑定它的约束全文：任务块里只有引用，task-brief 只抽
+任务块（抽不到 plan 头部的约束段），实现者又不读整份 plan——不随派发给它，它就要为一条它从没
+见过的约束负责。持久副本一份（plan 的约束段），临时副本按需现拷，不存在漂移面。
+
 引用格式：
 
 ```markdown
@@ -98,20 +104,14 @@ naming that component; the task reviewer verifies this as part of its gate.
 
 ## 与 writing-plans 自审的接线
 
-`writing-plans` 的自审清单第 4 条是：
+`writing-plans` 的自审清单第 5 条就是安全约束检查（原第 5 条 Proportion 顺延为第 6 条）：
 
-> **4. Review Focus:** For each input class or failure mode the spec implies, is
-> there a task whose tests exercise it?
+> **5. Security constraints:** Every constraint has a task that owns its
+> component and a test in that task that exercises it; a trust boundary no
+> constraint covers is a gap in the threat model, not in the plan.
 
-**加一条 4b**，写进你的自审：
-
-> **4b. Security Constraints:** For each security constraint, is there a task
-> that owns the component AND a test in that task that exercises it? A
-> constraint with no owning task, or with a test nobody writes, is a gap —
-> report it. Also: is there a trust boundary in the spec that NO constraint
-> covers? That is a gap in the threat model, not in the plan.
-
-第 4b 条的"信任边界没有约束覆盖"那一问很重要——它抓的是**威胁模型本身的漏项**，不是计划的漏项。
+第 5 条的后半句——"信任边界没有约束覆盖"——很重要：它抓的是**威胁模型本身的漏项**，
+不是计划的漏项。
 
 ## 已有 plan 怎么补
 
