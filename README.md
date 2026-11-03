@@ -302,8 +302,10 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 > （断言只检查每条适配是否命中，不检查 fork 的文件是否还在）。
 > 本 fork 跟随上游 port 的方式是 **`git rebase upstream/main`**，见
 > [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md)。
+> 唯一的例外是该指南里描述的罕见受控重新移植流程：另开分支执行，事后用 `git diff`
+> 核对安全文件是否还在。
 
-`skills/` 是**生成产物**，不要手改。同步逻辑写在两个地方，改它们再重跑即可**（仅限上游 port 仓库；本 fork 不要重跑——见上方警告）**：
+`skills/` 里的**上游技能内容**是**生成产物**，不要手改上游文件；上面列出的安全文档是本 fork 自己维护的。同步逻辑写在两个地方，改它们再重跑即可**（仅限上游 port 仓库；本 fork 不要重跑——见上方警告）**：
 
 - `scripts/sync-from-upstream.mjs` —— 拉上游技能树 + 重放所有 DSH 适配
   （每条适配都是一个带断言的字符串改写，上游一旦改了原文就**直接报错**，
@@ -431,9 +433,10 @@ node scripts/check-dsh-compat.mjs
 `list()` 会自动发现包里任何 `skills/<kebab-name>/SKILL.md`——只要它以 YAML
 frontmatter 开头（`name` + `description`，可选 `whenToUse`），无需改代码。
 
-注意：`skills/` 是上游同步的生成目录，**重跑 `scripts/sync-from-upstream.mjs`
-会整体重建它**，直接放进去的自建技能会被删掉；在本 fork 里重跑它还会连带删掉安全改造文件
-（见上面的警告，所以**不要在 fork 里重跑**）。两个安全位置：
+注意：`skills/` 里的**上游技能**是上游同步的生成目录，**重跑 `scripts/sync-from-upstream.mjs`
+会整体重建它**，直接放进去的自建技能会被删掉；本 fork 手工维护的安全文档也不在其中，
+在本 fork 里重跑它还会连带删掉那些安全文件（见上面的警告，所以**不要在 fork 里重跑**）。
+两个安全位置：
 
 - 放到 `$DSH_HOME/skills/`（用户级）或项目的 `.dsh/skills/` —— 与插件无关，
   最省事；
