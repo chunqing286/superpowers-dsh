@@ -179,9 +179,9 @@ here would:
   `skills/subagent-driven-development/task-reviewer-prompt.md`,
   `skills/subagent-driven-development/references/final-review.md`,
   `skills/writing-plans/SKILL.md`) — erasing the security dimension;
-- and **not report any failure**: the script's assertions only check that
-  each transform matched its anchor, not that the fork's files still exist,
-  so it exits successfully leaving a `skills/` tree with no security
+- and **not detect the loss**: the script's assertions only check that each
+  transform matched its anchor, not that the fork's files still exist, so it
+  exits successfully leaving a `skills/` tree with no security
   dimension.
 
 The correct way to pull the upstream port is the **git rebase** loop above

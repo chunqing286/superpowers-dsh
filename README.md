@@ -295,11 +295,15 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 > `skills/subagent-driven-development/references/` 下的安全文档（`security-loop.md`、
 > `security-review-part.md`、`security-kit.md`、`security-final-review.md`、
 > `threat-modeler-prompt.md`、`plan-security-section.md`），并把 4 个薄壳化改过的上游文件
-> 还原成上游原文——而且**不会报错**（它的断言只检查每条适配是否命中）。
+> （`skills/subagent-driven-development/SKILL.md`、
+> `skills/subagent-driven-development/task-reviewer-prompt.md`、
+> `skills/subagent-driven-development/references/final-review.md`、
+> `skills/writing-plans/SKILL.md`）还原成上游原文——而且**不会察觉这个损失**
+> （断言只检查每条适配是否命中，不检查 fork 的文件是否还在）。
 > 本 fork 跟随上游 port 的方式是 **`git rebase upstream/main`**，见
-> [`UPSTREAM-SYNC.md`](UPSTREAM-SYNC.md)。
+> [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md)。
 
-`skills/` 是**生成产物**，不要手改。同步逻辑写在两个地方，改它们再重跑即可：
+`skills/` 是**生成产物**，不要手改。同步逻辑写在两个地方，改它们再重跑即可**（仅限上游 port 仓库；本 fork 不要重跑——见上方警告）**：
 
 - `scripts/sync-from-upstream.mjs` —— 拉上游技能树 + 重放所有 DSH 适配
   （每条适配都是一个带断言的字符串改写，上游一旦改了原文就**直接报错**，
