@@ -155,7 +155,7 @@ then refresh the browser) — the bundle layer mounts at profile startup.
    npm run verify
    ```
 
-   The run must print `verify-skills: OK` as its first line; this release
+   The run must print `verify-skills: OK`; this release
    reports 15 skills registered, 84 files checked.
 
    `npm run compat` replays the DSH contract checks against a locally

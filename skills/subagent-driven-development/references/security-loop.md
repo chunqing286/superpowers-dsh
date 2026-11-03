@@ -57,23 +57,29 @@ dropped.
 
 ## How Security Constraints Bind to Tasks
 
-When the plan carries a `## Security Constraints` section, the reviewer of
-a task also gets the constraints that bind that task, as the same kind of
-attention lens as the global constraints:
+When the plan carries a `## Security Constraints` section, the implementer's
+dispatch and the reviewer of a task both get the constraints that bind that
+task, as the same kind of attention lens as the global constraints:
 
 - **Binding rule:** a constraint binds a task when the component path it
   names appears in that task's `Files:` list. One component touched by
   several tasks binds all of them. The reviewer only ever audits the
   components its task actually touches.
-- **Copy verbatim.** Hand the reviewer the binding constraints in the
-  plan's `[SEC-0N] ...` form, exactly as written. The authoritative
-  definition of a constraint lives in the plan's section alone — copies
-  drift.
+- **Copy verbatim.** Hand the reviewer and the implementer's dispatch the
+  binding constraints in the plan's `[SEC-0N] ...` form, exactly as
+  written. The authoritative definition of a constraint lives in the
+  plan's section alone — copies drift.
+- **A documented exception to "exact values only in the brief."** The
+  binding constraints are copied from the plan's `## Security Constraints`
+  section, not from the brief: the task block holds only a reference, and
+  the implementer must not be accountable for a requirement it never saw.
+  The dispatch is a one-off artifact, so no persistent copy drifts.
 - **The dismissal literal.** If the plan has no `## Security Constraints`
   section, or none of its constraints name a component this task touches,
   pass exactly `No security constraints bind this task.` The reviewer then
-  skips its security part and says so in its report — the dimension is
-  visibly dismissed, never silently forgotten.
+  skips its security part and says so in its report; on the implementer's
+  side the same literal means no security constraint applies to the task —
+  the dimension is visibly dismissed, never silently forgotten.
 - **Never the whole list.** A reviewer auditing constraints for components
   it did not change produces false positives, and false positives are what
   makes a reviewer stop being read.
@@ -84,8 +90,9 @@ attention lens as the global constraints:
   silently. The section's format, and how to add one to an existing plan,
   is in [plan-security-section.md](plan-security-section.md); the threat
   model that produces it is
-  [threat-modeler-prompt.md](threat-modeler-prompt.md), run before
-  [writing-plans](../../writing-plans/SKILL.md).
+  [threat-modeler-prompt.md](threat-modeler-prompt.md), dispatched by
+  [writing-plans](../../writing-plans/SKILL.md) just before it writes the
+  `## Security Constraints` section.
 
 ## Division of Labour with the DSH `review` Tool
 

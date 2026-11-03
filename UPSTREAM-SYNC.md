@@ -201,8 +201,8 @@ protect you here: the upstream port repo (LayneChai/superpowers-dsh) has no
 `tests/` directory, and this repo's `npm run verify` does **not** enforce
 the cap — so you must measure the file yourself.
 
-`skills/subagent-driven-development/SKILL.md` currently sits at **19,883
-bytes — 117 bytes of headroom**. Any upstream release that adds more than
+`skills/subagent-driven-development/SKILL.md` currently sits at **19,982
+bytes — 18 bytes of headroom**. Any upstream release that adds more than
 that to this file breaks the cap when our security bullet is re-added.
 
 After **every** upstream sync, re-measure:
@@ -242,11 +242,12 @@ converging instead of reflexively keeping the fork:
 
 1. Compare the upstream port's mechanism against the fork's four insertion
    points:
-   - threat model before planning (`writing-plans`,
+   - threat model dispatched by writing-plans just before it writes the
+     `## Security Constraints` section (`writing-plans`,
      `references/threat-modeler-prompt.md`),
    - the plan's `## Security Constraints` section,
-   - per-task security review (constraints passed verbatim into every task
-     brief, `references/security-review-part.md`),
+   - per-task security review (constraints passed verbatim into every task's
+     dispatch and the reviewer's input, `references/security-review-part.md`),
    - branch-level security review (final review security dimension,
      `references/security-final-review.md` / `references/security-loop.md`).
 2. If the upstream port covers all four points with equal or stronger

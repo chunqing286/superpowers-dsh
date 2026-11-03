@@ -4,11 +4,13 @@ Use this template when dispatching an implementer subagent.
 
 **Security part:** the constraints that bind a task travel with the
 dispatch — the implementer gets the same text the task's reviewer gets.
-Fill `[SECURITY_CONSTRAINTS]` with those constraints, copied verbatim from
-the plan's `## Security Constraints` section in the plan's `[SEC-0N] ...`
-form, or exactly `No security constraints bind this task.` when none bind.
-The binding rule and the plan-gap rule live in
-[references/security-loop.md](references/security-loop.md).
+This verbatim copy is a documented exception to the "exact values only in
+the brief" rule: the implementer must not answer for a requirement it never
+saw, and the dispatch is a one-off copy from the plan. Fill
+`[SECURITY_CONSTRAINTS]` with those constraints copied verbatim from the
+plan's `## Security Constraints` section in `[SEC-0N] ...` form, or exactly
+`No security constraints bind this task.` when none bind. The binding rule
+and the plan-gap rule live in [references/security-loop.md](references/security-loop.md).
 
 ```
 Subagent (general-purpose):
@@ -25,8 +27,10 @@ Subagent (general-purpose):
 
     ## Security Constraints
 
-    These constraints bind your task. Implement them exactly as written:
-    they are part of your requirements, not suggestions.
+    If the block below says `No security constraints bind this task.`, your
+    task has none — treat security constraints as not applicable and carry
+    on. Otherwise each constraint below binds your task: implement them
+    exactly as written; they are requirements, not suggestions.
 
     [SECURITY_CONSTRAINTS]
 

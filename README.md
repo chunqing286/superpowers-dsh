@@ -29,8 +29,8 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 `0.4.0-sec.2`，基于上游 port v0.4.0；首个发布 `0.4.0-sec.1` 已废弃——能安装但不激活）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
 进入两条开发流程：
 
-- **`writing-plans`**：写计划前先威胁建模，每份计划必须带
-  `## Security Constraints` 一节；
+- **`writing-plans`**：在写 `## Security Constraints` 一节之前先派发威胁建模，每份
+  计划必须带 `## Security Constraints` 一节；
 - **`subagent-driven-development`**：实现者的派发与任务级评审都原样收到绑定该任务的
   约束全文（无约束时收到字面量 `No security constraints bind this task.`），
   任务级评审新增安全部分，分支级终审新增安全终审。
@@ -358,7 +358,7 @@ node scripts/check-dsh-compat.mjs
   - 上游技能内容（obra/superpowers）同时加了
     `tests/skill-size/test-skill-size.sh`，任何 `SKILL.md` 达到
     20,000 字节即失败。本 fork 现在 15 个 SKILL.md **全部低于 20,000 字节**
-    （最大的是 `subagent-driven-development` 19,883）。
+    （最大的是 `subagent-driven-development` 19,982）。
 - **与 DSH 无关的部分**：issue / PR 模板改为要求「谁提的、你的人类伙伴原本要什么、
   200 字以内由人写的摘要」（#2569），`diagnosing-superpowers` 跟着加这两节并改用
   Bug Report 模板，`docs/superpowers/plans/` 下 18 份历史计划文档被删除。这些都在

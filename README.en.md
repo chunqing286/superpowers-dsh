@@ -33,8 +33,8 @@ published to npm as **`@chunqing286/superpowers-dsh`** (current release
 v0.4.0 it adds a
 **security-audit dimension** wired into two development flows:
 
-- **`writing-plans`**: threat-model before writing the plan; every plan
-  carries a `## Security Constraints` section;
+- **`writing-plans`**: dispatches the threat modeler just before it writes
+  the `## Security Constraints` section; every plan carries that section;
 - **`subagent-driven-development`**: the implementer's dispatch and the task
   reviewer both receive the constraints binding the task verbatim (or the
   literal `No security constraints bind this task.` when none bind), the
@@ -416,7 +416,7 @@ skills, 68 → 78 files):
     `tests/skill-size/test-skill-size.sh`, which fails when
     any `SKILL.md` reaches 20,000 bytes. All 15 `SKILL.md` files in this fork are
     now **under 20,000 bytes** (the largest is `subagent-driven-development` at
-    19,883).
+    19,982).
 - **Not applicable to DSH**: the issue and PR templates now require who filed,
   what the human partner asked for, and a human-written summary under 200 words
   (#2569); `diagnosing-superpowers` adds those two sections and switches to the

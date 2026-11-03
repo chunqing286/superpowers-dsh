@@ -14,7 +14,7 @@ brainstorming 之后、plan 任务主体成型之前）。产出的不是"漏洞
 
 ```
 Subagent (general-purpose):
-  description: "Threat model the spec before planning"
+  description: "Threat model the spec into precise security constraints"
   model: [MODEL — REQUIRED: use a capable model; this is a design task, not a
          mechanical one. An omitted model inherits the session's most
          expensive one — which may be correct here, but state it explicitly]
