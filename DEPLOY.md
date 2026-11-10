@@ -6,10 +6,10 @@ security-audit fork of the upstream port
 on any machine.
 
 - Fork repository: <https://github.com/chunqing286/superpowers-dsh>
-- npm package: **`@chunqing286/superpowers-dsh`** (current release `0.4.0-sec.3`;
-  the first, `0.4.0-sec.1`, is deprecated on npm — see Rollback;
-  based on the upstream port's v0.4.0; skill content from obra/superpowers
-  v7.0.1)
+- npm package: **`@chunqing286/superpowers-dsh`** (current release `0.5.0-sec.1`;
+  based on the upstream port's v0.5.0; skill content from obra/superpowers
+  v7.0.2; release history: `0.4.0-sec.1` is deprecated on npm — see Rollback,
+  `0.4.0-sec.2` activated but was superseded by `0.4.0-sec.3`)
 - This file ships in the GitHub repository only — it is **not** inside the npm
   tarball. If you installed the package and are reading the bundled README,
   read this doc at
@@ -52,7 +52,7 @@ Plugins page takes the package name and resolves the latest version:
 2. **CLI, for a named profile:**
 
    ```powershell
-   dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+   dsh plugin --profile web add @chunqing286/superpowers-dsh@0.5.0-sec.1
    ```
 
    This forwards to pnpm inside that profile's own directory and initializes
@@ -62,7 +62,7 @@ Plugins page takes the package name and resolves the latest version:
    app actually loads. For the desktop app, use the Plugins page (option 1).
 3. **Inside an agent session:** the harness's `plugin_manager` tool with
    action `install_bundle` and target
-   `@chunqing286/superpowers-dsh@0.4.0-sec.3`.
+   `@chunqing286/superpowers-dsh@0.5.0-sec.1`.
 
 > **Never distribute with a `link:` spec.** As a way to *get the plugin onto
 > another machine* it is banned: a `link:` spec is an absolute,
@@ -75,7 +75,7 @@ each form stands:
 
 1. **npm registry spec** (the three forms above) — the **recommended**
    distribution form: works from any machine. The CLI and in-session forms
-   are **version-pinned** (`@chunqing286/superpowers-dsh@0.4.0-sec.3`), so
+   are **version-pinned** (`@chunqing286/superpowers-dsh@0.5.0-sec.1`), so
    you can reproduce the install, pin it, and roll back by version; the
    desktop **Plugins page** takes only the package name and resolves the
    **latest published version** — it is *not* pinned and moves as new
@@ -196,7 +196,7 @@ files. (This is exactly why the fork ships the security content inside the
 package.)
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.5.0-sec.1
 ```
 
 (substitute the version you are upgrading to). Then restart the profile and
@@ -204,27 +204,35 @@ re-run the verification steps above.
 
 ## Rollback
 
-Install the previously published `-sec.N` version. **`0.4.0-sec.1` is
-deprecated on npm** (it installs but fails to activate — that defect is what
-`0.4.0-sec.2` fixes), so never roll back to it; from `0.4.0-sec.2` onward,
-the previous `-sec.N` version is a valid rollback target. List what exists:
+Roll back by installing an older published version. **`0.4.0-sec.1` is
+deprecated on npm** (it installs but fails to activate) and is **never a
+valid rollback target**. The rollback target for this release is
+**`0.4.0-sec.3`** — the last version known to activate correctly.
+(`0.4.0-sec.2` did activate, but it was superseded by `0.4.0-sec.3`, so
+`sec.3` is the right place to land.) List what exists:
 
 ```powershell
 npm view @chunqing286/superpowers-dsh versions
 ```
 
-Then install the version you want back. Right now the published `-sec.N`
-versions are `0.4.0-sec.3` (the current one), `0.4.0-sec.2` and
-`0.4.0-sec.1` (deprecated) — so `0.4.0-sec.2` is a valid rollback target:
+Then install the version you want back:
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@<version>
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+```
+
+If clients have already picked up the bad release through the `latest`
+dist-tag, re-point the tag at the rollback version so new installs resolve
+to it:
+
+```powershell
+npm dist-tag add @chunqing286/superpowers-dsh@0.4.0-sec.3 latest
 ```
 
 Restart the profile afterwards.
 
 ## Syncing with upstream
 
-Maintainer-side procedure (rebase onto upstream port releases, conflict
+Maintainer-side procedure (merging upstream port releases, conflict
 rules, version/tag naming): see
 [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md).

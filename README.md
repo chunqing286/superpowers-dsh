@@ -26,7 +26,8 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 
 本仓库是上游 port [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh)
 的 **fork**，发布为 npm 包 **`@chunqing286/superpowers-dsh`**（当前版本
-`0.4.0-sec.3`，基于上游 port v0.4.0；首个发布 `0.4.0-sec.1` 已废弃——能安装但不激活）。相对上游 port v0.4.0，它多了一条**安全审计维度**，
+`0.5.0-sec.1`，基于上游 port v0.5.0；历史发布 `0.4.0-sec.1` 已废弃——能安装但不激活，
+`0.4.0-sec.2` 曾能激活但已被 `0.4.0-sec.3` 取代）。相对上游 port v0.5.0，它多了一条**安全审计维度**，
 进入两条开发流程：
 
 - **`writing-plans`**：在写 `## Security Constraints` 一节之前先派发威胁建模，每份
@@ -40,7 +41,7 @@ agent preset 的作用域链都会合并这些技能。技能正文随包分发
 **安装**（Windows PowerShell，`dsh` 在 PATH 上）：
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.5.0-sec.1
 ```
 
 （把 `web` 换成你的 profile 名；桌面应用用户见下句。）
@@ -51,7 +52,7 @@ profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id
 有意为之，不要去"修正"。
 
 **与上游的同步关系**：本 fork 的 `main` 就是安全线 = 上游全部提交 + 本 fork 的
-安全提交。上游发新版后 rebase 到 `upstream/main`、按固定原则解冲突、验证、
+安全提交。上游发新版后 merge `upstream/main`、按固定原则解冲突、验证、
 把版本号 bump 为 `<上游版本>-sec.N` 再发布。
 
 完整的安装 / 验证 / 升级 / 回滚流程见
@@ -61,7 +62,7 @@ profile 里，`--profile` 可能装到别的 profile。注意：DSH 插件行 id
 这两个文件不进 npm 包，只在 GitHub 仓库里——所以上面已给出安装命令本身。
 下文各节描述的是同一个插件，其中的安装命令均已指向本 fork 的包，不再指向上游
 port 的未加作用域旧包。其中：跨机器安装**推荐 registry 规格**
-`@chunqing286/superpowers-dsh@0.4.0-sec.3`（版本锁定，可按版本复现与回滚）；
+`@chunqing286/superpowers-dsh@0.5.0-sec.1`（版本锁定，可按版本复现与回滚）；
 GitHub 形式装的是同一个 fork 的**分支头**（无版本锁）；本地文件夹 / `file:`
 形式仅开发自用、机器相关。
 
@@ -110,7 +111,7 @@ Agent 会自动完成安装（`dsh plugin --profile web add` → 重启 profile 
 包已发布到 npm，名为 `@chunqing286/superpowers-dsh`（国内会自动同步到 npmmirror 镜像）：
 
 ```sh
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.5.0-sec.1
 ```
 
 > 必须用 `dsh plugin` 形式——直接 `npm install @chunqing286/superpowers-dsh` 只会把包当
@@ -126,9 +127,14 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 
 ### 从 tarball 或本地文件夹安装
 
+> 本节是**开发者 / 离线场景**的安装方式（例如在本机 `npm pack` 后自装、或以链接方式
+> 调试插件）。发布用户请用上面的 **npm 注册表规格**（「从 npm 安装（推荐）」一节），
+> 它是跨机器、版本锁定的发布方式。另外注意：本地文件夹是**链接安装**，若在该文件夹里
+> 跑 `npm run sync`，会静默抹掉本 fork 的安全维度（见「上游同步」一节的警告）。
+
 ```sh
-# tarball（例如 npm pack 产出的 chunqing286-superpowers-dsh-0.4.0-sec.3.tgz）
-dsh plugin --profile web add C:\路径\to\chunqing286-superpowers-dsh-0.4.0-sec.3.tgz
+# tarball（例如 npm pack 产出的 chunqing286-superpowers-dsh-0.5.0-sec.1.tgz）
+dsh plugin --profile web add C:\路径\to\chunqing286-superpowers-dsh-0.5.0-sec.1.tgz
 
 # 或解压后的插件文件夹（pnpm 以链接方式安装，改完重启即生效）
 dsh plugin --profile web add C:\路径\to\superpowers-dsh
@@ -155,7 +161,7 @@ dsh --profile web --dump-config     # 必须出现 `superpowers-dsh` 行
 把 `--profile` 指向你实际运行的 profile：
 
 ```sh
-dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.5.0-sec.1
 dsh --profile headless --dump-config
 ```
 
@@ -195,7 +201,7 @@ dsh plugin --profile web remove @chunqing286/superpowers-dsh
 | 已发布版本数 | 承载接口的两个包 `@deepseek-ai/dsh-skill` 与 `@deepseek-ai/dsh-app-boot` 各 **31 个已发布版本** |
 | 逐版本核对结果 | **31 / 31 全部一致**，从最早的 `0.0.1-rc.1` 到最新的 `0.2.1-alpha.1`，接口签名与语义均未变 |
 | 端到端实跑 | 把 `lib/index.js` 挂进本机 DSH `0.2.0-rc.2` 的**真实 `SkillRegistry`**：`list()` 返回 15 个技能，逐个 `get()` 都能取到正文与 `resourceBase` |
-| 插件自身版本 | `0.4.0-sec.3`（技能内容同步自 obra/superpowers `v7.0.2`） |
+| 插件自身版本 | `0.5.0-sec.1`（技能内容同步自 obra/superpowers `v7.0.2`） |
 | 运行时依赖 | 无。只用 Node 内置模块，不引入任何第三方依赖，因此不受 DSH 依赖树变化影响 |
 | Node.js | 本机验证 `v22.22.2`；DSH 自身未声明 `engines`，本插件也未限制 |
 
@@ -301,7 +307,7 @@ check-dsh-compat: OK — this plugin matches the installed DSH SDK
 > `skills/subagent-driven-development/implementer-prompt.md`、
 > `skills/writing-plans/SKILL.md`）还原成上游原文——而且**不会察觉这个损失**
 > （断言只检查每条适配是否命中，不检查 fork 的文件是否还在）。
-> 本 fork 跟随上游 port 的方式是 **`git rebase upstream/main`**，见
+> 本 fork 跟随上游 port 的方式是 **`git merge upstream/main`**，见
 > [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md)。
 > 唯一的例外是该指南里描述的罕见受控重新移植流程：另开分支执行，事后用 `git diff`
 > 核对安全文件是否还在。

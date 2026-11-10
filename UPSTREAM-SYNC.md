@@ -9,7 +9,7 @@ and what to do when the upstream port cuts a new release.
 Two different "upstreams" appear in this document, always qualified:
 
 - **the upstream port** — LayneChai/superpowers-dsh, the DSH plugin
-  repository this fork is rebased on;
+  repository this fork tracks;
 - **the upstream skill content** — obra/superpowers, the Claude-Code skills
   library the port (and therefore this fork) takes its skill text from.
 
@@ -36,7 +36,7 @@ git remote add upstream https://github.com/LayneChai/superpowers-dsh.git
 ```powershell
 git fetch upstream
 git switch main
-git rebase upstream/main
+git merge upstream/main
 # resolve conflicts — see the next section
 
 npm run verify                 # must print "verify-skills: OK"
@@ -54,8 +54,8 @@ git commit -m "chore: sync upstream v<version> and publish @chunqing286/superpow
 npm publish                  # prerequisites below
 
 git tag sec-v<upstream version>-<N>        # e.g. sec-v0.5.0-1
-git push --force-with-lease origin main    # see below
-git push --force-with-lease origin main:local/security-audit
+git push origin main                       # a merge is a fast-forward push
+git push origin main:local/security-audit
                                            # keep the mirror branch identical to main
 git push origin sec-v<upstream version>-<N>
 
@@ -65,7 +65,7 @@ dsh plugin --profile web add @chunqing286/superpowers-dsh@<version>-sec.N
 
 **`npm run verify` output.** The invariant is that the run prints
 `verify-skills: OK`. The counts are a snapshot, not an invariant: this
-release reports 15 skills registered, 84 files checked, and the next
+release reports 15 skills registered, 80 files checked, and the next
 upstream release will change both numbers.
 
 **`npm publish` prerequisites.** The package is owned by the npm account
@@ -75,23 +75,20 @@ account's configured 2FA / automation token. `publishConfig.access =
 "public"` in `package.json` is what makes the scoped package public; no
 `--access public` flag is needed.
 
-**About the force-push.** The first push of the fork's `main` was a
-fast-forward. After the first rebase sync, the branch's commits have been
-rewritten (the security commits now sit on top of the *new* upstream port
-history), so a plain `git push` is rejected. That is expected — use
-`git push --force-with-lease origin main`. `--force-with-lease` (not plain
-`--force`) refuses to overwrite the remote if someone else pushed to it in
-the meantime. Never force-push anywhere else, and never push to `upstream`.
-The one exception is the mirror push already in the loop,
-`git push --force-with-lease origin main:local/security-audit`: that branch
-is a **mirror** of `main`, so after `main` is rebased it must be rewritten
-to the new `main` — and `--force-with-lease` limits that rewrite to the
-state you last fetched, so a concurrent change on the branch is refused
-rather than silently overwritten.
+**Why merge, not rebase.** The fork's security commits span many files
+(see the delta below), so rebasing would re-resolve roughly the same
+conflicts on nearly every upstream commit being replayed. A single merge
+resolves each file's conflict once. A merge also never rewrites history:
+`git push origin main` is a plain fast-forward — no `--force-with-lease`
+is needed anywhere — and **already-published tags such as `sec-v0.4.0-3`
+therefore stay valid forever**. (The fork's early history did use rebase;
+the force-push notes in older checkouts of this document described that
+era. Never force-push now: if a push is ever rejected as non-fast-forward,
+stop and investigate instead of forcing.)
 
 ## Resolving conflicts
 
-`git diff --stat v0.4.0..HEAD` shows the fork's **full delta** relative to
+`git diff --stat v0.5.0..HEAD` shows the fork's **full delta** relative to
 the upstream port: 18 paths. Only the **ten files that already exist
 upstream** are conflict-bearing — **five upstream skill files** plus the
 **five more upstream files the fork modifies**, listed below. The other
@@ -159,7 +156,8 @@ Specifically:
   `references/security-final-review.md` splice after resolving upstream's
   text — keep the splice and attach it at its new home.
 
-After resolving: `git rebase --continue`, then `npm run verify` before
+After resolving: conclude the merge (`git merge --continue`, or simply
+commit if you resolved in a regular commit), then `npm run verify` before
 committing anything else.
 
 ## Never run the upstream sync script in this fork
@@ -189,8 +187,8 @@ here would:
   exits successfully leaving a `skills/` tree with no security
   dimension.
 
-The correct way to pull the upstream port is the **git rebase** loop above
-(`git fetch upstream` → `git rebase upstream/main`). If a re-port from obra
+The correct way to pull the upstream port is the **git merge** loop above
+(`git fetch upstream` → `git merge upstream/main`). If a re-port from obra
 is genuinely needed (rare), first confirm the working tree is clean, do it
 on a separate branch, and afterwards check with `git diff` that the security
 files above are all still present.
@@ -198,17 +196,20 @@ files above are all still present.
 ## The byte-cap trap
 
 Every `SKILL.md` must stay under **20,000 bytes**. The limit comes from the
-upstream skill content — obra/superpowers v7.0.1's
-`tests/skill-size/test-skill-size.sh` (`LIMIT=20000`, measured in bytes,
+upstream skill content — obra/superpowers' `tests/skill-size/test-skill-size.sh`
+(introduced in v7.0.1; `LIMIT=20000`, measured in bytes,
 because Claude Code re-attaches a skill truncated to 20,000 characters after
 compaction and bytes are stricter than characters). Two things do **not**
 protect you here: the upstream port repo (LayneChai/superpowers-dsh) has no
 `tests/` directory, and this repo's `npm run verify` does **not** enforce
 the cap — so you must measure the file yourself.
 
-`skills/subagent-driven-development/SKILL.md` currently sits at **19,982
-bytes — 18 bytes of headroom**. Any upstream release that adds more than
-that to this file breaks the cap when our security bullet is re-added.
+On the `v0.5.0` baseline, upstream's
+`skills/subagent-driven-development/SKILL.md` is **19,704 bytes**. The cap
+therefore leaves a budget of at most **295 bytes** for this fork's security
+bullet in that file. The fork's current version of the file measures
+**19,957 bytes — 42 bytes of budget left**. If upstream adds even one more
+line to this file, the security bullet has to be squeezed again.
 
 After **every** upstream sync, re-measure:
 
@@ -226,9 +227,13 @@ files, which have no cap) until the file is under the limit again.
   upstream version, increments on re-syncs of the same one).
 - Git tag: **`sec-v<upstream version>-<N>`**, mirroring the npm version.
 
-The current release is npm `0.4.0-sec.3`, tag **`sec-v0.4.0-3`**. (The first
-release, `0.4.0-sec.1` / tag `sec-v0.4.0-1`, is deprecated: it installed but
-did not activate. The tag carries the counter because a counter-less
+The current release is npm `0.5.0-sec.1`, tag **`sec-v0.5.0-1`**. (Earlier
+releases: `0.4.0-sec.3` / tag `sec-v0.4.0-3` — the last `0.4.0`-line
+version and this release's rollback target; `0.4.0-sec.2` activated but was
+superseded; the first release, `0.4.0-sec.1` / tag `sec-v0.4.0-1`, is
+deprecated: it installed but did not activate. Because the sync is a merge,
+history is never rewritten and **`sec-v0.4.0-3` therefore stays valid
+forever**. The tag carries the counter because a counter-less
 `sec-v0.4.0` would collide on the second publish of the same upstream line.)
 
 ## Publish order
@@ -264,3 +269,10 @@ converging instead of reflexively keeping the fork:
 
 Until that evaluation is explicitly done and recorded, the fork stays the
 security line.
+
+**Evaluation for v0.5.0 (done 2026-11-10, this sync):** upstream port
+v0.5.0 ships **no security-audit capability** — a grep of the v0.5.0 skill
+tree finds no `## Security Constraints` section, no threat-model step, and
+no security-audit dimension anywhere (the word "security" appears only
+incidentally in unrelated prose). The fork therefore remains the security
+line, and **all four insertion points are retained** in this release.

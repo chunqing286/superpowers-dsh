@@ -28,9 +28,10 @@ user configuration.
 This repository is a **fork** of the upstream port
 [LayneChai/superpowers-dsh](https://github.com/LayneChai/superpowers-dsh),
 published to npm as **`@chunqing286/superpowers-dsh`** (current release
-`0.4.0-sec.3`, based on the upstream port's v0.4.0; the first release,
-`0.4.0-sec.1`, is deprecated — it installs but does not activate). Over the upstream port
-v0.4.0 it adds a
+`0.5.0-sec.1`, based on the upstream port's v0.5.0; the historical release
+`0.4.0-sec.1` is deprecated — it installs but does not activate, and
+`0.4.0-sec.2` activated but was superseded by `0.4.0-sec.3`). Over the upstream port
+v0.5.0 it adds a
 **security-audit dimension** wired into two development flows:
 
 - **`writing-plans`**: dispatches the threat modeler just before it writes
@@ -47,7 +48,7 @@ install — no hand-editing of local files.
 **Install** (Windows PowerShell, `dsh` on `PATH`):
 
 ```powershell
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.5.0-sec.1
 ```
 
 (Replace `web` with your profile name; desktop-app users see the next
@@ -61,7 +62,7 @@ name is scoped. Both are deliberate — do not "fix" either.
 
 **Sync relationship with upstream**: the fork's `main` *is* the security
 line — upstream's commits plus this fork's security commits. When upstream
-releases, the fork rebases onto `upstream/main`, resolves conflicts by a
+releases, the fork merges `upstream/main`, resolves conflicts by a
 fixed rule, verifies, bumps the version to `<upstream version>-sec.N`, and
 publishes.
 
@@ -74,7 +75,7 @@ which is why the install command is given above, not just a pointer.
 The sections below describe the same plugin; their install commands all
 refer to this fork's package, not the upstream port's unscoped package.
 Among them: for another machine prefer the **registry spec**
-`@chunqing286/superpowers-dsh@0.4.0-sec.3` — it is version-pinned, so the
+`@chunqing286/superpowers-dsh@0.5.0-sec.1` — it is version-pinned, so the
 install is reproducible and rollback-able by version; the GitHub forms
 install the same fork from the **branch head** (no version pin); the
 local-folder / `file:` form is development-only and machine-specific.
@@ -129,7 +130,7 @@ The package is published on npm as `@chunqing286/superpowers-dsh` (synced to
 the npmmirror mirror for mainland China):
 
 ```sh
-dsh plugin --profile web add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile web add @chunqing286/superpowers-dsh@0.5.0-sec.1
 ```
 
 > Use the `dsh plugin` form — a plain `npm install @chunqing286/superpowers-dsh` installs
@@ -145,9 +146,17 @@ dsh plugin --profile web add https://github.com/chunqing286/superpowers-dsh.git
 
 ### Install from a tarball or a local folder
 
+> This section is for **developer / offline scenarios** (e.g. after a local
+> `npm pack`, or linking the folder to debug the plugin). Published users
+> should use the **npm registry spec** above (the "Install from npm
+> (recommended)" section) — the cross-machine, version-pinned distribution
+> form. Also note: a local folder is a **linked install**; running
+> `npm run sync` in that folder silently wipes the fork's security dimension
+> (see the warning in "Upstream sync").
+
 ```sh
-# tarball (e.g. the one `npm pack` produces: chunqing286-superpowers-dsh-0.4.0-sec.3.tgz)
-dsh plugin --profile web add C:\path\to\chunqing286-superpowers-dsh-0.4.0-sec.3.tgz
+# tarball (e.g. the one `npm pack` produces: chunqing286-superpowers-dsh-0.5.0-sec.1.tgz)
+dsh plugin --profile web add C:\path\to\chunqing286-superpowers-dsh-0.5.0-sec.1.tgz
 
 # or the unpacked package folder (pnpm links it, so edits take effect on restart)
 dsh plugin --profile web add C:\path\to\superpowers-dsh
@@ -175,7 +184,7 @@ A successful install looks like this:
 Point `--profile` at whichever profile you run:
 
 ```sh
-dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.4.0-sec.3
+dsh plugin --profile headless add @chunqing286/superpowers-dsh@0.5.0-sec.1
 dsh --profile headless --dump-config
 ```
 
@@ -221,7 +230,7 @@ Upstream-port (LayneChai/superpowers-dsh) audit snapshot: checked
 | Published versions carrying them | **31 released versions each** of `@deepseek-ai/dsh-skill` and `@deepseek-ai/dsh-app-boot` |
 | Per-version audit | **31 / 31 identical** — from the first release `0.0.1-rc.1` through the newest `0.2.1-alpha.1`, no signature or semantics changed |
 | End-to-end run | `lib/index.js` mounted into the **real `SkillRegistry`** of local DSH `0.2.0-rc.2`: `list()` returned 15 skills and every `get()` returned a body and a `resourceBase` |
-| This plugin's version | `0.4.0-sec.3` (skill content synced from obra/superpowers `v7.0.2`) |
+| This plugin's version | `0.5.0-sec.1` (skill content synced from obra/superpowers `v7.0.2`) |
 | Runtime dependencies | None. Node built-ins only, so a DSH dependency-tree change cannot break it |
 | Node.js | Verified on `v22.22.2`; DSH declares no `engines`, and neither does this plugin |
 
@@ -343,7 +352,7 @@ tracks (LayneChai/superpowers-dsh).
 > `skills/writing-plans/SKILL.md`) to their upstream text — and it **does not
 > detect the loss** (its assertions check only that each adaptation matched,
 > not that the fork's files still exist).
-> This fork tracks the upstream port with **`git rebase upstream/main`**; see
+> This fork tracks the upstream port with **`git merge upstream/main`**; see
 > [UPSTREAM-SYNC.md](https://github.com/chunqing286/superpowers-dsh/blob/main/UPSTREAM-SYNC.md).
 > The only exception is the rare controlled re-port procedure described in
 > that guide: run it on a separate branch, then verify with `git diff` that
