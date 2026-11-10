@@ -156,7 +156,9 @@ then refresh the browser) — the bundle layer mounts at profile startup.
    ```
 
    The run must print `verify-skills: OK`; this release
-   reports 15 skills registered, 84 files checked.
+   reports 15 skills registered, 80 files checked. (The counts are a
+   snapshot of this release, not a durable invariant — upstream adds and
+   removes files between releases.)
 
    `npm run compat` replays the DSH contract checks against a locally
    installed DSH SDK — but it looks in `$DSH_HOME/profiles/node_modules`
